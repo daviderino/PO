@@ -1,4 +1,5 @@
 *.class
+tests/
 .idea/
 .vscode/
 *.jar

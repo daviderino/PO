@@ -5,6 +5,8 @@ package m19;
 
 import m19.exceptions.BadEntrySpecificationException;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.Serializable;
 
@@ -13,26 +15,30 @@ import java.io.Serializable;
  */
 public class Library implements Serializable {
 
-  /** Serial number for serialization. */
-  private static final long serialVersionUID = 201901101348L;
+	/** Serial number for serialization. */
+	private static final long serialVersionUID = 201901101348L;
 
-  // FIXME define attributes
+	// FIXME define attributes
 
-  // FIXME define contructor(s)
+	// FIXME define contructor(s)
 
-  // FIXME define methods
+	// FIXME define methods
 
-  /**
-   * Read the text input file at the beginning of the program and populates the
-   * instances of the various possible types (books, DVDs, users).
-   * 
-   * @param filename
-   *          name of the file to load
-   * @throws BadEntrySpecificationException
-   * @throws IOException
-   */
-  void importFile(String filename) throws BadEntrySpecificationException, IOException {
-    // FIXME implement method
-  }
+	/**
+	 * Read the text input file at the beginning of the program and populates the
+	 * instances of the various possible types (books, DVDs, users).
+	 *
+	 * @param filename
+	 *          name of the file to load
+	 * @throws BadEntrySpecificationException
+	 * @throws IOException
+	 */
+	void importFile(String filename) throws BadEntrySpecificationException, IOException {
+		BufferedReader reader = new BufferedReader(new FileReader(filename));
+		String line;
 
+		while(!(line = reader.readLine()).equals(null)) {
+
+		}
+	}
 }
