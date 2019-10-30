@@ -3,6 +3,10 @@ package m19.app.requests;
 // FIXME import core concepts
 // FIXME import ui concepts
 
+import m19.LibraryManager;
+import pt.tecnico.po.ui.Command;
+import pt.tecnico.po.ui.DialogException;
+
 /**
  * 4.4.2. Return a work.
  */

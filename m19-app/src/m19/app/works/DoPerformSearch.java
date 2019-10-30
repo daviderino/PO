@@ -3,6 +3,9 @@ package m19.app.works;
 // FIXME import core concepts
 // FIXME import ui concepts
 
+import m19.LibraryManager;
+import pt.tecnico.po.ui.Command;
+
 /**
  * 4.3.3. Perform search according to miscellaneous criteria.
  */

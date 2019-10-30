@@ -3,6 +3,9 @@ package m19.app.users;
 // FIXME import core concepts
 // FIXME import ui concepts
 
+import m19.LibraryManager;
+import pt.tecnico.po.ui.Command;
+
 /**
  * 4.2.4. Show all users.
  */

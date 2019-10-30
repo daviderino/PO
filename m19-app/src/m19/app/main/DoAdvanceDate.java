@@ -3,6 +3,9 @@ package m19.app.main;
 // FIXME import core concepts
 // FIXME import ui concepts
 
+import m19.LibraryManager;
+import pt.tecnico.po.ui.Command;
+
 /**
  * 4.1.3. Advance the current date.
  */

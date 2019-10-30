@@ -3,6 +3,11 @@ package m19;
 // FIXME import system types
 // FIXME import project (core) types
 
+import m19.exceptions.BadEntrySpecificationException;
+
+import java.io.IOException;
+import java.io.Serializable;
+
 /**
  * Class that represents the library as a whole.
  */
