@@ -15,26 +15,26 @@ import pt.tecnico.po.ui.Input;
  */
 public class DoShowUser extends Command<LibraryManager> {
 
-  Input<Integer> _id;
+	Input<Integer> _id;
 
-  /**
-   * @param receiver
-   */
-  public DoShowUser(LibraryManager receiver) {
-    super(Label.SHOW_USER, receiver);
-    _id = _form.addIntegerInput(Message.requestUserId());
-  }
+	/**
+	 * @param receiver
+	 */
+	public DoShowUser(LibraryManager receiver) {
+		super(Label.SHOW_USER, receiver);
+		_id = _form.addIntegerInput(Message.requestUserId());
+	}
 
-  /** @see pt.tecnico.po.ui.Command#execute() */
-  @Override
-  public final void execute() throws DialogException {
-    _form.parse();
-    User user = _receiver.getUser(_id.value());
-    if (user != null) {
-      _display.popup(user.toString());
-    }else{
-      throw new m19.app.exceptions.NoSuchUserException(_id.value());
-    }
-  }
+	/** @see pt.tecnico.po.ui.Command#execute() */
+	@Override
+	public final void execute() throws DialogException {
+		_form.parse();
+		/*User user = _receiver.getUser(_id.value());
+		if (user != null) {
+			_display.popup(user.toString());
+		}else{
+			throw new m19.app.exceptions.NoSuchUserException(_id.value());
+		}*/
+	}
 
 }

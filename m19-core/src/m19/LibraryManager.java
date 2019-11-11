@@ -16,12 +16,21 @@ public class LibraryManager {
 	private String _filename;
 
 	/**
+	 * Creates a new object to allow to import files
+	 */
+	public LibraryManager() {
+		_library = new Library();
+		_filename = null;
+	}
+
+	/**
 	 * @throws MissingFileAssociationException
 	 * @throws IOException
 	 * @throws FileNotFoundException
 	 */
 	public void save() throws MissingFileAssociationException, IOException, FileNotFoundException {
-		ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(_filename));
+		ObjectOutputStream outputStream = new ObjectOutputStream(
+				new BufferedOutputStream(new FileOutputStream(_filename)));
 		outputStream.writeObject(_library);
 		outputStream.close();
 	}
@@ -43,7 +52,7 @@ public class LibraryManager {
 	 * @throws ClassNotFoundException
 	 */
 	public void load(String filename) throws FailedToOpenFileException, IOException, ClassNotFoundException {
-		ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(filename));
+		ObjectInputStream inputStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(filename)));
 		_library = (Library)inputStream.readObject();
 		_filename = filename;
 		inputStream.close();
@@ -60,5 +69,12 @@ public class LibraryManager {
 		catch (IOException | BadEntrySpecificationException e) {
 			throw new ImportFileException(e);
 		}
+	}
+
+	/**
+	 * @return
+	 */
+	public String getFilename() {
+		return _filename;
 	}
 }

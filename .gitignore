@@ -4,3 +4,6 @@ tests/
 .vscode/
 *.jar
 *.iml
+out/
+ficheiro
+*.txt
