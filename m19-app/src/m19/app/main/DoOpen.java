@@ -1,13 +1,11 @@
 package m19.app.main;
 
-// FIXME import core concepts
-// FIXME import ui concepts
-
 import m19.LibraryManager;
 import m19.app.exceptions.FileOpenFailedException;
 import m19.exceptions.FailedToOpenFileException;
 import pt.tecnico.po.ui.Command;
 import pt.tecnico.po.ui.DialogException;
+import pt.tecnico.po.ui.Input;
 
 import java.io.IOException;
 
@@ -15,27 +13,27 @@ import java.io.IOException;
  * 4.1.1. Open existing document.
  */
 public class DoOpen extends Command<LibraryManager> {
+	Input<String> _filename;
 
-  // FIXME define input fields if needed
+	/**
+	 * @param receiver
+	 */
+	public DoOpen(LibraryManager receiver) {
+		super(Label.OPEN, receiver);
+		_filename = _form.addStringInput(Message.openFile());
+	}
 
-  /**
-   * @param receiver
-   */
-  public DoOpen(LibraryManager receiver) {
-    super(Label.OPEN, receiver);
-    // FIXME initialize input fields if needed
-  }
-
-  /** @see pt.tecnico.po.ui.Command#execute() */
-  @Override
-  public final void execute() throws DialogException {
-   /* try {
-      // FIXME implement command
-    } catch (FailedToOpenFileException fnfe) {
-      throw new FileOpenFailedException(fnfe.getName());
-    } catch (ClassNotFoundException | IOException e) {
-      e.printStackTrace();
-    }*/
-  }
+	/** @see pt.tecnico.po.ui.Command#execute() */
+	@Override
+	public final void execute() throws DialogException {
+		_form.parse();
+		try {
+			_receiver.load(_filename.value());
+		} catch (FailedToOpenFileException fnfe) {
+			throw new FileOpenFailedException(fnfe.getName());
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 }

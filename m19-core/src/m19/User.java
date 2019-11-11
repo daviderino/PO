@@ -7,10 +7,12 @@ import m19.Behaviour;
  * Class that represents the concept of user
  */
 public class User implements Serializable {
+	private static final long serialVersionUID = 201901101348L;
+
 	private int _id;
 	private String _name;
 	private String _email;
-	private boolean _state;
+	private boolean _state;         // true represents active, false represents inactive
 	private int _streak;
 	private Behaviour _behaviour;
 	private int _totalFines;
@@ -22,9 +24,9 @@ public class User implements Serializable {
 	 * @param email of the user being created
 	 */
 	public User(int id, String name, String email) {
-		this._id = id;
-		this._name = name;
-		this._email = email;
+		_id = id;
+		_name = name;
+		_email = email;
 		_state = true;
 		_streak = 0;
 		_behaviour = Behaviour.NORMAL;

@@ -3,14 +3,11 @@ package m19;
 import java.io.Serializable;
 
 public class Book extends Work implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
     private String _author;
     private char[] _ISBN = new char[10];
 
-    public Book(int id, int count, String title, int price, Category category, String author, String ISBN) {
-        super(id, count, title, price, category);
+    public Book(int id, String title, String author, int price, Category category, String ISBN, int count) {
+        super(id, title, price, category, count);
         _author = author;
         _ISBN = ISBN.toCharArray(); 
     }
