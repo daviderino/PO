@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public abstract class Work implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 201901101348L;
 
     private int _id;
     private int _count;
@@ -13,9 +13,9 @@ public abstract class Work implements Serializable {
     private int _availableCopies;
     private Category _category;
 
-    public Work(int id, int count, String title, int price, Category category) {
+    public Work(int id, String title, int price, Category category, int count) {
         _id = id;
-        _count =count;
+        _count = count;
         _availableCopies = count;
         _title = title;
         _price = price;

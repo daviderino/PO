@@ -1,8 +1,5 @@
 package m19;
 
-// FIXME import system types
-// FIXME import project (core) types
-
 import m19.exceptions.BadEntrySpecificationException;
 import m19.exceptions.FailedToOpenFileException;
 import m19.exceptions.ImportFileException;
@@ -15,14 +12,8 @@ import java.io.*;
  */
 public class LibraryManager {
 
-	private Library _library;  // FIXME initialize this attribute
+	private Library _library;
 	private String _filename;
-
-	// FIXME define other attributes
-
-	// FIXME define contructor(s)
-
-	// FIXME define methods
 
 	/**
 	 * @throws MissingFileAssociationException
