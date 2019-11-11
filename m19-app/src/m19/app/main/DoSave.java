@@ -18,13 +18,16 @@ public class DoSave extends Command<LibraryManager> {
 	 */
 	public DoSave(LibraryManager receiver) {
 		super(Label.SAVE, receiver);
-		_filename = _form.addStringInput(Message.newSaveAs());
+		_filename = null;
 	}
 
 	/** @see pt.tecnico.po.ui.Command#execute() */
 	@Override
 	public final void execute() {
 		_form.parse();
+		if(_filename == null){
+			_filename = _form.addStringInput(Message.newSaveAs());
+		}
 		try {
 			_receiver.saveAs(_filename.value());
 		} catch (MissingFileAssociationException | IOException e) {
