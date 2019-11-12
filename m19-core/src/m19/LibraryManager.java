@@ -135,4 +135,8 @@ public class LibraryManager {
 	public Map<Integer, Work> getAllWorks(){
 		return _library.getAllWorks();
 	}
+
+	public void advanceDate(int n){
+		_library.advanceDate(n);
+	}
 }
