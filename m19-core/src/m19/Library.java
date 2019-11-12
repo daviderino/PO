@@ -22,8 +22,6 @@ public class Library implements Serializable {
 	private Map<Integer, User> _users = new HashMap<Integer, User>();
 	private Map<Integer, Work> _works = new TreeMap<Integer, Work>();
 
-	private int date = 0;
-
 	/**
 	 * @param fields with the work's info
 	 */
