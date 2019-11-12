@@ -103,7 +103,14 @@ public class LibraryManager {
 		return _library.getUser(id);
 	}
 
-
+	/**
+	 * Calls getAllUsers() from library
+	 *
+	 * @return a sorted list containing the users
+	 */
+	public List<User> getAllUsers() {
+		return _library.getAllUsers();
+	}
 
 	/**
 	 * @return the filename
@@ -112,10 +119,19 @@ public class LibraryManager {
 		return _filename;
 	}
 
+	/**
+	 * Returns a work in the library
+	 * @param id of the work to get
+	 * @return the work
+	 */
 	public Work getWork(int id){
 		return _library.getWork(id);
 	}
 
+	/**
+	 * Returns all works in the library
+	 * @return a  works in the library
+	 */
 	public Map<Integer, Work> getAllWorks(){
 		return _library.getAllWorks();
 	}

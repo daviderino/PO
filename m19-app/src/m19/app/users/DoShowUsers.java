@@ -1,9 +1,10 @@
 package m19.app.users;
 
-// FIXME import core concepts
-// FIXME import ui concepts
+import java.util.List;
+import java.util.ListIterator;
 
 import m19.LibraryManager;
+import m19.User;
 import pt.tecnico.po.ui.Command;
 
 /**
@@ -11,17 +12,21 @@ import pt.tecnico.po.ui.Command;
  */
 public class DoShowUsers extends Command<LibraryManager> {
 
-  /**
-   * @param receiver
-   */
-  public DoShowUsers(LibraryManager receiver) {
-    super(Label.SHOW_USERS, receiver);
-  }
+	/**
+	 * @param receiver
+	 */
+	public DoShowUsers(LibraryManager receiver) {
+		super(Label.SHOW_USERS, receiver);
+	}
 
-  /** @see pt.tecnico.po.ui.Command#execute() */
-  @Override
-  public final void execute() {
-    // FIXME implement command
-  }
-  
+	/** @see pt.tecnico.po.ui.Command#execute() */
+	@Override
+	public final void execute() {
+		List<User> users = _receiver.getAllUsers();
+		for(User user: users) {
+			_display.addLine(user.toString());
+		}
+		_display.display();
+	}
+
 }
