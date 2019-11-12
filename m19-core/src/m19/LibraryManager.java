@@ -136,10 +136,15 @@ public class LibraryManager {
 		return _library.getAllWorks();
 	}
 
+
 	/**
 	 * @return the date
 	 */
 	public int getDate() {
 		return _library.getDate();
+  }
+  
+	public void advanceDate(int n){
+		_library.advanceDate(n);
 	}
 }

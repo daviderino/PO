@@ -17,6 +17,7 @@ public class Library implements Serializable {
 	private static final long serialVersionUID = 201901101348L;
 	private int _userId = 0;
 	private int _workId = 0;
+	private int date = 0;
 
 	private Map<Integer, User> _users = new HashMap<Integer, User>();
 	private Map<Integer, Work> _works = new TreeMap<Integer, Work>();
@@ -146,5 +147,14 @@ public class Library implements Serializable {
 	 */
 	public int getDate() {
 		return date;
+  }
+  
+   /**
+	 * Advances the date
+	 * @param n number of days to advance
+	 */
+	public void advanceDate(int n){
+		date = date + n;
+		/*Verify Requests */
 	}
 }
