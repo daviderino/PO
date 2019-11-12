@@ -136,14 +136,18 @@ public class LibraryManager {
 		return _library.getAllWorks();
 	}
 
-
 	/**
 	 * @return the date
 	 */
 	public int getDate() {
 		return _library.getDate();
   }
-  
+
+	/**
+	 * Advances the date and updates users states
+	 *
+	 * @param n number of days to advance
+	 */
 	public void advanceDate(int n){
 		_library.advanceDate(n);
 	}
