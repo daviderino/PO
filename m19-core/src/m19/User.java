@@ -1,12 +1,11 @@
 package m19;
 
 import java.io.Serializable;
-import m19.Behaviour;
 
 /**
  * Class that represents the concept of user
  */
-public class User implements Serializable {
+public class User implements Serializable, Comparable<User> {
 	private static final long serialVersionUID = 201901101348L;
 
 	private int _id;
@@ -132,5 +131,17 @@ public class User implements Serializable {
 	@Override
 	public String toString() {
 		return getId() + " - " + getName() + " - " + getEmail() + " - " + getBehaviour() + " - " + getState();
+	}
+
+	@Override
+	public int compareTo(User user) {
+		int ret = this._name.compareTo(user.getName());
+
+		if(ret == 0) {
+			return this._id - user.getId();
+		}
+		else {
+			return ret;
+		}
 	}
 }
