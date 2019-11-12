@@ -28,7 +28,6 @@ public class DoOpen extends Command<LibraryManager> {
 	public final void execute() throws DialogException {
 		_form.parse();
 		try {
-			System.out.println(_filename.value());
 			_receiver.load(_filename.value());
 		} catch (FailedToOpenFileException fnfe) {
 			throw new FileOpenFailedException(fnfe.getName());
