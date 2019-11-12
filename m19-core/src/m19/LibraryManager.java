@@ -31,6 +31,10 @@ public class LibraryManager {
 	 * @throws FileNotFoundException
 	 */
 	public void save() throws MissingFileAssociationException, IOException, FileNotFoundException {
+		if (_filename == null) {
+			throw new MissingFileAssociationException();
+		}
+
 		ObjectOutputStream outputStream = new ObjectOutputStream(
 				new BufferedOutputStream(new FileOutputStream(_filename)));
 		outputStream.writeObject(_library);
@@ -54,10 +58,15 @@ public class LibraryManager {
 	 * @throws ClassNotFoundException
 	 */
 	public void load(String filename) throws FailedToOpenFileException, IOException, ClassNotFoundException {
-		ObjectInputStream inputStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(filename)));
-		_library = (Library)inputStream.readObject();
-		_filename = filename;
-		inputStream.close();
+		try {
+			ObjectInputStream inputStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(filename)));
+			_library = (Library)inputStream.readObject();
+			_filename = filename;
+			inputStream.close();
+		}
+		catch(IOException ex) {
+			throw new FailedToOpenFileException(filename);
+		}
 	}
 
 	/**
@@ -74,7 +83,30 @@ public class LibraryManager {
 	}
 
 	/**
-	 * @return
+	 * Adds a user to the user aggregation in library
+	 *
+	 * @param name of the user
+	 * @param email of the user
+	 * @return the id of the user registered
+	 */
+	public int createUser(String name, String email) {
+		return _library.createUser(name, email);
+	}
+
+	/**
+	 * Returns a user with a given id
+	 *
+	 * @param id of the user to get
+	 * @return the user
+	 */
+	public User getUser(int id) {
+		return _library.getUser(id);
+	}
+
+
+
+	/**
+	 * @return the filename
 	 */
 	public String getFilename() {
 		return _filename;
