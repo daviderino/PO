@@ -9,21 +9,21 @@ import pt.tecnico.po.ui.Input;
  */
 public class DoAdvanceDate extends Command<LibraryManager> {
 
-  private Input<Integer> n;
+  private Input<Integer> daysToAdvance;
 
   /**
    * @param receiver
    */
   public DoAdvanceDate(LibraryManager receiver) {
     super(Label.ADVANCE_DATE, receiver);
-    _form.addIntegerInput(Message.requestDaysToAdvance());
+    daysToAdvance = _form.addIntegerInput(Message.requestDaysToAdvance());
   }
 
   /** @see pt.tecnico.po.ui.Command#execute() */
   @Override
   public final void execute() {
     _form.parse();
-    _receiver.advanceDate(n.value());
+    _receiver.advanceDate(daysToAdvance.value());
   }
   
 }
