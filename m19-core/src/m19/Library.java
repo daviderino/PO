@@ -23,7 +23,7 @@ public class Library implements Serializable {
 	private int _userId = 0;
 	private int _workId = 0;
 
-	private Map<String, User> _users = new HashMap<String, User>();
+	private Map<Integer, User> _users = new HashMap<Integer, User>();
 	private Map<Integer, Work> _works = new TreeMap<Integer, Work>();
 
 	/**
@@ -49,8 +49,9 @@ public class Library implements Serializable {
 	 * @param fields with the user's info
 	 */
 	private void registerUser(String[] fields) {
-		User user = new User(_userId++, fields[1], fields[2]);
-		_users.put(user.getName(), user);
+		int id = _userId++;
+		User user = new User(id, fields[1], fields[2]);
+		_users.put(id, user);
 	}
 
 	/**
@@ -89,5 +90,22 @@ public class Library implements Serializable {
 			String[] splitLine = line.split(":");
 			registerFromFields(splitLine);
 		}
+	}
+
+	/**
+	 * Creates a user and returns its id
+	 *
+	 * @param name of the user
+	 * @param email of the user
+	 * @return the id of the user
+	 */
+	public int createUser(String name, String email) {
+		User user = new User(_userId++, name, email);
+		_users.put(user.getId(), user);
+		return user.getId();
+	}
+
+	public User getUser(int id) {
+		return _users.get(id);
 	}
 }
