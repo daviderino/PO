@@ -29,12 +29,13 @@ public class DoShowUser extends Command<LibraryManager> {
 	@Override
 	public final void execute() throws DialogException {
 		_form.parse();
-		/*User user = _receiver.getUser(_id.value());
-		if (user != null) {
+		User user = _receiver.getUser(_id.value());
+		if(user != null) {
 			_display.popup(user.toString());
-		}else{
-			throw new m19.app.exceptions.NoSuchUserException(_id.value());
-		}*/
+		}
+		else {
+			throw new NoSuchUserException(_id.value());
+		}
 	}
 
 }
