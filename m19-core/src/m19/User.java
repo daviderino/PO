@@ -119,7 +119,7 @@ public class User implements Serializable, Comparable<User> {
 		else if (_behaviour != Behaviour.NONCOMPLIANT && _streak <= -3) {
 			_behaviour = Behaviour.NONCOMPLIANT;
 		}
-		else if(_behaviour == Behaviour.NONCOMPLIANT && _streak >= 3 && _streak < 5) {
+		else if(_behaviour == Behaviour.NONCOMPLIANT && _streak >= 3 && _streak <= 4) {
 			_behaviour = Behaviour.NORMAL;
 		}
 	}

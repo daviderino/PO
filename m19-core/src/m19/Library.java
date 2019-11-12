@@ -14,8 +14,6 @@ import java.util.regex.Pattern;
  * Class that represents the library as a whole.
  */
 public class Library implements Serializable {
-
-	/** Serial number for serialization. */
 	private static final long serialVersionUID = 201901101348L;
 	private int _userId = 0;
 	private int _workId = 0;
@@ -23,6 +21,8 @@ public class Library implements Serializable {
 
 	private Map<Integer, User> _users = new HashMap<Integer, User>();
 	private Map<Integer, Work> _works = new TreeMap<Integer, Work>();
+
+	private int date = 0;
 
 	/**
 	 * @param fields with the work's info
@@ -53,7 +53,7 @@ public class Library implements Serializable {
 	}
 
 	/**
-	 * @param fields
+	 * @param fields to register
 	 */
 	private void registerFromFields(String[] fields) throws BadEntrySpecificationException {
 		final Pattern patternWork = Pattern.compile("^(BOOK|DVD)");
@@ -112,7 +112,12 @@ public class Library implements Serializable {
 		return _users.get(id);
     }
 
-    public List<User> getAllUsers() {
+	/**
+	 * Gets a list of the users sorted by name or if the names are equal, by id
+	 *
+	 * @return a list containing the sorted users
+	 */
+	public List<User> getAllUsers() {
 	    List<User> usersList = new LinkedList<>();
 	    usersList.addAll(_users.values());
 		Collections.sort(usersList);
@@ -137,6 +142,14 @@ public class Library implements Serializable {
 	}
 
 	/**
+	 * Gets the date
+	 * @return the date
+	 */
+	public int getDate() {
+		return date;
+  }
+  
+   /**
 	 * Advances the date
 	 * @param n number of days to advance
 	 */

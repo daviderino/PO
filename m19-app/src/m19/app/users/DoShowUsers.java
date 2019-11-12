@@ -1,7 +1,6 @@
 package m19.app.users;
 
 import java.util.List;
-import java.util.ListIterator;
 
 import m19.LibraryManager;
 import m19.User;
