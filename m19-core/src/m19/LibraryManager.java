@@ -135,4 +135,11 @@ public class LibraryManager {
 	public Map<Integer, Work> getAllWorks(){
 		return _library.getAllWorks();
 	}
+
+	/**
+	 * @return the date
+	 */
+	public int getDate() {
+		return _library.getDate();
+	}
 }

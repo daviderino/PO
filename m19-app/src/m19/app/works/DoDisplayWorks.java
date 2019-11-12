@@ -1,12 +1,10 @@
 package m19.app.works;
 
-import java.util.List;
 import java.util.Map;
 
 import m19.LibraryManager;
 import m19.Work;
 import pt.tecnico.po.ui.Command;
-import pt.tecnico.po.ui.Display;
 
 /**
  * 4.3.2. Display all works.
