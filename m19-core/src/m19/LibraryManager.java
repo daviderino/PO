@@ -6,6 +6,8 @@ import m19.exceptions.ImportFileException;
 import m19.exceptions.MissingFileAssociationException;
 
 import java.io.*;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The façade class.
@@ -108,5 +110,13 @@ public class LibraryManager {
 	 */
 	public String getFilename() {
 		return _filename;
+	}
+
+	public Work getWork(int id){
+		return _library.getWork(id);
+	}
+
+	public Map<Integer, Work> getAllWorks(){
+		return _library.getAllWorks();
 	}
 }

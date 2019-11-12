@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.regex.Pattern;
@@ -107,5 +109,13 @@ public class Library implements Serializable {
 
 	public User getUser(int id) {
 		return _users.get(id);
+  }
+  
+	public Work getWork(int id){
+		return _works.get(id);
+	}
+
+	public Map<Integer, Work> getAllWorks(){
+		return _works;
 	}
 }
