@@ -6,8 +6,6 @@ import java.io.Serializable;
  * Class that represents the concept of user
  */
 public class User implements Serializable, Comparable<User> {
-	private static final long serialVersionUID = 201901101348L;
-
 	private int _id;
 	private String _name;
 	private String _email;
@@ -28,7 +26,7 @@ public class User implements Serializable, Comparable<User> {
 		_email = email;
 		_state = true;
 		_streak = 0;
-		_behaviour = Behaviour.NORMAL;
+		_behaviour = new Normal(this);
 		_totalFines = 0;
 	}
 
@@ -57,7 +55,7 @@ public class User implements Serializable, Comparable<User> {
 	 * @return the corresponding string of the user's behaviour
 	 */
 	public String getBehaviour() {
-		return _behaviour.name();
+		return _behaviour.toString();
 	}
 
 	/**
@@ -113,17 +111,12 @@ public class User implements Serializable, Comparable<User> {
 	 * Updates users behaviour accordingly
 	 */
 	private void updateBehaviour() {
-		if(_behaviour != Behaviour.COMPLIANT && _streak >= 5) {
-			_behaviour = Behaviour.COMPLIANT;
-		}
-		else if (_behaviour != Behaviour.NONCOMPLIANT && _streak <= -3) {
-			_behaviour = Behaviour.NONCOMPLIANT;
-		}
-		else if(_behaviour == Behaviour.NONCOMPLIANT && _streak >= 3 && _streak <= 4) {
-			_behaviour = Behaviour.NORMAL;
-		}
+		_behaviour.update();
 	}
 
+	/**
+	 * Pays a fine
+	 */
 	public void payFine() {
 		// TODO: Implement later. Terceira entrega
 	}
@@ -133,6 +126,10 @@ public class User implements Serializable, Comparable<User> {
 		return getId() + " - " + getName() + " - " + getEmail() + " - " + getBehaviour() + " - " + getState();
 	}
 
+	/**
+	 * @param user to compare to
+	 * @return value corresponding to the comparison
+	 */
 	@Override
 	public int compareTo(User user) {
 		int ret = this._name.compareTo(user.getName());

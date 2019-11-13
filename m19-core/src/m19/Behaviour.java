@@ -1,20 +1,15 @@
 package m19;
 
-public enum Behaviour {
-	COMPLIANT(5),
-	NORMAL(3),
-	NONCOMPLIANT(1);
-
-	private final int _maxRequests;
-
-	Behaviour(int maxRequests) {
-		_maxRequests = maxRequests;
-	}
+public abstract class Behaviour {
+	protected User _user;
+	protected int _maxRequests;
 
 	/**
-	 * @return number of requests a user with a given behavour can perform
+	 * @param user
 	 */
-	public int maxRequests() {
-		return _maxRequests;
+	public Behaviour(User user) {
+		_user = user;
 	}
+
+	public abstract  void update();
 }
