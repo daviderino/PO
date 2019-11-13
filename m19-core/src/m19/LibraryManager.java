@@ -16,6 +16,7 @@ public class LibraryManager {
 
 	private Library _library;
 	private String _filename;
+	private boolean _libChanged = true;    // variable which controls whether the library has been changed or not
 
 	/**
 	 * Creates a new object to allow to import files
@@ -35,10 +36,16 @@ public class LibraryManager {
 			throw new MissingFileAssociationException();
 		}
 
+		if(!_libChanged) {
+			return;
+		}
+
 		ObjectOutputStream outputStream = new ObjectOutputStream(
 				new BufferedOutputStream(new FileOutputStream(_filename)));
+
 		outputStream.writeObject(_library);
 		outputStream.close();
+		_libChanged = false;
 	}
 
 	/**
@@ -63,8 +70,9 @@ public class LibraryManager {
 			_library = (Library)inputStream.readObject();
 			_filename = filename;
 			inputStream.close();
+			_libChanged = false;
 		}
-		catch(IOException ex) {
+		catch(ClassNotFoundException | IOException  ex) {
 			throw new FailedToOpenFileException(filename);
 		}
 	}
@@ -76,6 +84,7 @@ public class LibraryManager {
 	public void importFile(String datafile) throws ImportFileException {
 		try {
 			_library.importFile(datafile);
+			_libChanged = true;
 		}
 		catch (IOException | BadEntrySpecificationException e) {
 			throw new ImportFileException(e);
@@ -90,7 +99,9 @@ public class LibraryManager {
 	 * @return the id of the user registered
 	 */
 	public int createUser(String name, String email) {
-		return _library.createUser(name, email);
+		int ret = _library.createUser(name, email);
+		_libChanged = true;
+		return ret;
 	}
 
 	/**
@@ -137,6 +148,16 @@ public class LibraryManager {
 	}
 
 	/**
+	 * Advances the date and updates users states
+	 *
+	 * @param n number of days to advance
+	 */
+	public void advanceDate(int n){
+		_library.advanceDate(n);
+		_libChanged = true;
+	}
+
+	/**
 	 * @return the date
 	 */
 	public int getDate() {
@@ -144,11 +165,9 @@ public class LibraryManager {
   }
 
 	/**
-	 * Advances the date and updates users states
-	 *
-	 * @param n number of days to advance
+	 * @return the state of the lib, if it has changed true, false otherwise
 	 */
-	public void advanceDate(int n){
-		_library.advanceDate(n);
+	public boolean getLibChanged() {
+		return _libChanged;
 	}
 }

@@ -25,27 +25,42 @@ public class Library implements Serializable {
 	/**
 	 * @param fields with the work's info
 	 */
-	private void registerWork(String[] fields) {
+	private void registerWork(String[] fields) throws BadEntrySpecificationException {
 		int id = _workId++;
-		int price = Integer.parseInt(fields[3]);
-		Category category = Category.valueOf(fields[4]);
-		int count = Integer.parseInt(fields[6]);
 
-		if(fields[0].equals("BOOK")) {
-			Book book = new Book(id, fields[1], fields[2], price, category, fields[5], count);
-			_works.put(id, book);
+		try {
+			int price = Integer.parseInt(fields[3]);
+			Category category = Category.valueOf(fields[4]);
+			int count = Integer.parseInt(fields[6]);
+
+			if(fields[1] == null || fields[1].isEmpty()
+					|| fields[2] == null || fields[2].isEmpty()
+					|| fields[5] == null || fields[5].isEmpty()) {
+				throw new BadEntrySpecificationException(Arrays.toString(fields));
+			}
+
+			if(fields[0].equals("BOOK")) {
+				Book book = new Book(id, fields[1], fields[2], price, category, fields[5], count);
+				_works.put(id, book);
+			}
+			else if(fields[0].equals("DVD")) {
+				DVD dvd = new DVD(id, fields[1], fields[2], price, category, fields[5], count);
+				_works.put(id, dvd);
+			}
 		}
-		else if(fields[0].equals("DVD")) {
-			DVD dvd = new DVD(id, fields[1], fields[2], price, category, fields[5], count);
-			_works.put(id, dvd);
+		catch (IllegalArgumentException | NullPointerException e) {
+			throw new BadEntrySpecificationException(Arrays.toString(fields), e);
 		}
 	}
 
 	/**
 	 * @param fields with the user's info
 	 */
-	private void registerUser(String[] fields) {
+	private void registerUser(String[] fields) throws BadEntrySpecificationException {
 		int id = _userId++;
+		if(fields[1] == null || fields[1].isEmpty() || fields[2] == null || fields[2].isEmpty()) {
+			throw new BadEntrySpecificationException(Arrays.toString(fields));
+		}
 		User user = new User(id, fields[1], fields[2]);
 		_users.put(id, user);
 	}
@@ -62,9 +77,6 @@ public class Library implements Serializable {
 		}
 		else if(patternUser.matcher(fields[0]).matches()) {
 			registerUser(fields);
-		}
-		else {
-			throw new BadEntrySpecificationException(fields[0]);
 		}
 	}
 
@@ -86,6 +98,8 @@ public class Library implements Serializable {
 			String[] splitLine = line.split(":");
 			registerFromFields(splitLine);
 		}
+
+		reader.close();
 	}
 
 	/**
