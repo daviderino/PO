@@ -7,4 +7,13 @@ tests/
 out/
 ficheiro
 *.txt
-CVS/
+*CVS/
+*Entries
+CVS
+m19-app/src/m19/app/CVS/
+m19-app/src/m19/app/main/CVS/
+m19-app/src/m19/app/requests/CVS/
+m19-app/src/m19/app/users/CVS/
+m19-app/src/m19/app/works/CVS/
+m19-core/src/m19/CVS/Entries
+m19-core/src/m19/exceptions/CVS/
