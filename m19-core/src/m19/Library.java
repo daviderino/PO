@@ -166,7 +166,9 @@ public class Library implements Serializable {
 	 * @param n number of days to advance
 	 */
 	public void advanceDate(int n){
-		date = date + n;
-		/*Verify Requests */
+		if(n > 0){
+			date = date + n;
+			/*Verify Requests */
+		}
 	}
 }
