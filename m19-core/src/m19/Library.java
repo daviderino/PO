@@ -1,5 +1,6 @@
 package m19;
 
+import m19.app.exceptions.UserRegistrationFailedException;
 import m19.exceptions.BadEntrySpecificationException;
 
 import java.io.BufferedReader;
@@ -33,13 +34,14 @@ public class Library implements Serializable {
 			Category category = Category.valueOf(fields[4]);
 			int count = Integer.parseInt(fields[6]);
 
-			if(fields[1] == null || fields[1].isEmpty()
-					|| fields[2] == null || fields[2].isEmpty()
-					|| fields[5] == null || fields[5].isEmpty()) {
+			if(fields[1] == null || fields[2] == null ||  fields[5] == null) {
 				throw new BadEntrySpecificationException(Arrays.toString(fields));
 			}
 
 			if(fields[0].equals("BOOK")) {
+				if (fields[5].length() != 10) {
+					throw new BadEntrySpecificationException(Arrays.toString(fields));
+				}
 				Book book = new Book(id, fields[1], fields[2], price, category, fields[5], count);
 				_works.put(id, book);
 			}
@@ -105,11 +107,15 @@ public class Library implements Serializable {
 	/**
 	 * Creates a user and returns its id
 	 *
-	 * @param name of the user
+	 * @param name  of the user
 	 * @param email of the user
 	 * @return the id of the user
+	 * @throws UserRegistrationFailedException
 	 */
-	public int createUser(String name, String email) {
+	public int createUser(String name, String email) throws UserRegistrationFailedException {
+		if(name.isEmpty() || email.isEmpty()){
+			throw new UserRegistrationFailedException(name, email);
+		}
 		User user = new User(_userId++, name, email);
 		_users.put(user.getId(), user);
 		return user.getId();

@@ -1,5 +1,6 @@
 package m19;
 
+import m19.app.exceptions.UserRegistrationFailedException;
 import m19.exceptions.BadEntrySpecificationException;
 import m19.exceptions.FailedToOpenFileException;
 import m19.exceptions.ImportFileException;
@@ -16,7 +17,7 @@ public class LibraryManager {
 
 	private Library _library;
 	private String _filename;
-	private boolean _libChanged = true;    // variable which controls whether the library has been changed or not
+	private boolean _libChanged = true; // variable which controls whether the library has been changed or not
 
 	/**
 	 * Creates a new object to allow to import files
@@ -36,7 +37,7 @@ public class LibraryManager {
 			throw new MissingFileAssociationException();
 		}
 
-		if(!_libChanged) {
+		if (!_libChanged) {
 			return;
 		}
 
@@ -66,13 +67,13 @@ public class LibraryManager {
 	 */
 	public void load(String filename) throws FailedToOpenFileException, IOException, ClassNotFoundException {
 		try {
-			ObjectInputStream inputStream = new ObjectInputStream(new BufferedInputStream(new FileInputStream(filename)));
-			_library = (Library)inputStream.readObject();
+			ObjectInputStream inputStream = new ObjectInputStream(
+					new BufferedInputStream(new FileInputStream(filename)));
+			_library = (Library) inputStream.readObject();
 			_filename = filename;
 			inputStream.close();
 			_libChanged = false;
-		}
-		catch(ClassNotFoundException | IOException  ex) {
+		} catch (ClassNotFoundException | IOException ex) {
 			throw new FailedToOpenFileException(filename);
 		}
 	}
@@ -85,8 +86,7 @@ public class LibraryManager {
 		try {
 			_library.importFile(datafile);
 			_libChanged = true;
-		}
-		catch (IOException | BadEntrySpecificationException e) {
+		} catch (IOException | BadEntrySpecificationException e) {
 			throw new ImportFileException(e);
 		}
 	}
@@ -94,11 +94,12 @@ public class LibraryManager {
 	/**
 	 * Adds a user to the user aggregation in library
 	 *
-	 * @param name of the user
+	 * @param name  of the user
 	 * @param email of the user
 	 * @return the id of the user registered
+	 * @throws UserRegistrationFailedException
 	 */
-	public int createUser(String name, String email) {
+	public int createUser(String name, String email) throws UserRegistrationFailedException {
 		int ret = _library.createUser(name, email);
 		_libChanged = true;
 		return ret;
