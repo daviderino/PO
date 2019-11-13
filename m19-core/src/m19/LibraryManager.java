@@ -1,6 +1,5 @@
 package m19;
 
-import m19.app.exceptions.UserRegistrationFailedException;
 import m19.exceptions.BadEntrySpecificationException;
 import m19.exceptions.FailedToOpenFileException;
 import m19.exceptions.ImportFileException;
@@ -97,9 +96,8 @@ public class LibraryManager {
 	 * @param name  of the user
 	 * @param email of the user
 	 * @return the id of the user registered
-	 * @throws UserRegistrationFailedException
 	 */
-	public int createUser(String name, String email) throws UserRegistrationFailedException {
+	public int createUser(String name, String email) {
 		int ret = _library.createUser(name, email);
 		_libChanged = true;
 		return ret;

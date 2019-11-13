@@ -1,8 +1,5 @@
 package m19.app.users;
 
-// FIXME import core concepts
-// FIXME import ui concepts
-
 import m19.LibraryManager;
 import m19.User;
 import m19.app.exceptions.NoSuchUserException;

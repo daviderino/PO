@@ -1,10 +1,6 @@
 package m19.app.users;
 
-// FIXME import core concepts
-// FIXME import ui concepts
-
 import m19.LibraryManager;
-import m19.User;
 import m19.app.exceptions.UserRegistrationFailedException;
 import pt.tecnico.po.ui.Command;
 import pt.tecnico.po.ui.DialogException;
@@ -29,8 +25,13 @@ public class DoRegisterUser extends Command<LibraryManager> {
 
 	/** @see pt.tecnico.po.ui.Command#execute() */
 	@Override
-	public final void execute() throws DialogException, UserRegistrationFailedException{
+	public final void execute() throws DialogException{
 		_form.parse();
+
+		if(_name.value().isEmpty() || _email.value().isEmpty()) {
+			throw new UserRegistrationFailedException(_name.value(), _email.value());
+		}
+
 		int id =  _receiver.createUser(_name.value(), _email.value());
 		_display.popup(Message.userRegistrationSuccessful(id));
 	}

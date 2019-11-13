@@ -1,6 +1,5 @@
 package m19;
 
-import m19.app.exceptions.UserRegistrationFailedException;
 import m19.exceptions.BadEntrySpecificationException;
 
 import java.io.BufferedReader;
@@ -110,12 +109,8 @@ public class Library implements Serializable {
 	 * @param name  of the user
 	 * @param email of the user
 	 * @return the id of the user
-	 * @throws UserRegistrationFailedException
 	 */
-	public int createUser(String name, String email) throws UserRegistrationFailedException {
-		if(name.isEmpty() || email.isEmpty()){
-			throw new UserRegistrationFailedException(name, email);
-		}
+	public int createUser(String name, String email)  {
 		User user = new User(_userId++, name, email);
 		_users.put(user.getId(), user);
 		return user.getId();
