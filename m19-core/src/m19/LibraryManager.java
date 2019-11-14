@@ -29,7 +29,6 @@ public class LibraryManager {
 	 */
 	public void save() throws MissingFileAssociationException, IOException, FileNotFoundException {
 		if (_filename == null) {
-			System.out.println("throws");
 			throw new MissingFileAssociationException();
 		}
 
