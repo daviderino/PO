@@ -3,6 +3,7 @@ package m19.app.users;
 import m19.LibraryManager;
 import m19.User;
 import m19.app.exceptions.NoSuchUserException;
+import m19.exceptions.GetUserFailedException;
 import pt.tecnico.po.ui.Command;
 import pt.tecnico.po.ui.DialogException;
 import pt.tecnico.po.ui.Input;
@@ -26,11 +27,11 @@ public class DoShowUser extends Command<LibraryManager> {
 	@Override
 	public final void execute() throws DialogException {
 		_form.parse();
-		User user = _receiver.getUser(_id.value());
-		if(user != null) {
+		try {
+			User user = _receiver.getUser(_id.value());
 			_display.popup(user.toString());
 		}
-		else {
+		catch(GetUserFailedException ex) {
 			throw new NoSuchUserException(_id.value());
 		}
 	}

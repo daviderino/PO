@@ -1,5 +1,8 @@
 /BadEntrySpecificationException.java/1.2/Tue Nov 12 11:26:28 2019//
+/CreateUserFailedException.java/1.1/Thu Nov 14 12:02:39 2019//
 /FailedToOpenFileException.java/1.1/Tue Sep 24 22:46:41 2019//
+/GetUserFailedException.java/1.1/Thu Nov 14 12:02:39 2019//
+/GetWorkFailedException.java/1.1/Thu Nov 14 12:02:39 2019//
 /ImportFileException.java/1.1/Tue Sep 24 22:46:41 2019//
 /MissingFileAssociationException.java/1.1/Tue Sep 24 22:46:41 2019//
 D

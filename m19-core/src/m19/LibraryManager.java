@@ -1,9 +1,6 @@
 package m19;
 
-import m19.exceptions.BadEntrySpecificationException;
-import m19.exceptions.FailedToOpenFileException;
-import m19.exceptions.ImportFileException;
-import m19.exceptions.MissingFileAssociationException;
+import m19.exceptions.*;
 
 import java.io.*;
 import java.util.List;
@@ -97,7 +94,11 @@ public class LibraryManager {
 	 * @param email of the user
 	 * @return the id of the user registered
 	 */
-	public int createUser(String name, String email) {
+	public int createUser(String name, String email) throws CreateUserFailedException {
+		if(name.isEmpty() || email.isEmpty()) {
+			throw new CreateUserFailedException();
+		}
+
 		int ret = _library.createUser(name, email);
 		_libChanged = true;
 		return ret;
@@ -109,8 +110,13 @@ public class LibraryManager {
 	 * @param id of the user to get
 	 * @return the user
 	 */
-	public User getUser(int id) {
-		return _library.getUser(id);
+	public User getUser(int id) throws GetUserFailedException {
+		User user = _library.getUser(id);
+		
+		if(user == null) {
+			throw new GetUserFailedException();
+		}
+		return user;
 	}
 
 	/**
@@ -134,8 +140,14 @@ public class LibraryManager {
 	 * @param id of the work to get
 	 * @return the work
 	 */
-	public Work getWork(int id){
-		return _library.getWork(id);
+	public Work getWork(int id) throws GetWorkFailedException {
+		Work work = _library.getWork(id);
+
+		if(work == null) {
+			throw new GetWorkFailedException();
+		}
+
+		return work;
 	}
 
 	/**
