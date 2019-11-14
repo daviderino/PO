@@ -23,6 +23,8 @@ public class Library implements Serializable {
 	private Map<Integer, Work> _works = new TreeMap<Integer, Work>();
 
 	/**
+	 * Registers a work from the given fields in the Map
+	 *
 	 * @param fields with the work's info
 	 */
 	private void registerWork(String[] fields) throws BadEntrySpecificationException {
@@ -55,6 +57,8 @@ public class Library implements Serializable {
 	}
 
 	/**
+	 * Registers a user in the map
+	 *
 	 * @param fields with the user's info
 	 */
 	private void registerUser(String[] fields) throws BadEntrySpecificationException {
@@ -133,7 +137,6 @@ public class Library implements Serializable {
 	public List<User> getAllUsers() {
 	    List<User> usersList = new LinkedList<>();
 	    usersList.addAll(_users.values());
-		Collections.sort(usersList);
 		return usersList;
     }
 
@@ -150,8 +153,10 @@ public class Library implements Serializable {
 	 * Gets all works in library
 	 * @return a Map of all of the works
 	 */
-	public Map<Integer, Work> getAllWorks(){
-		return _works;
+	public List<Work> getAllWorks(){
+		List<Work> worksList = new LinkedList<>();
+		worksList.addAll(_works.values());
+		return worksList;
 	}
 
 	/**

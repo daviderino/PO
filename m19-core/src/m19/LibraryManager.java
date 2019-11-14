@@ -4,7 +4,6 @@ import m19.exceptions.*;
 
 import java.io.*;
 import java.util.List;
-import java.util.Map;
 
 /**
  * The façade class.
@@ -30,6 +29,7 @@ public class LibraryManager {
 	 */
 	public void save() throws MissingFileAssociationException, IOException, FileNotFoundException {
 		if (_filename == null) {
+			System.out.println("throws");
 			throw new MissingFileAssociationException();
 		}
 
@@ -95,7 +95,7 @@ public class LibraryManager {
 	 * @return the id of the user registered
 	 */
 	public int createUser(String name, String email) throws CreateUserFailedException {
-		if(name.isEmpty() || email.isEmpty()) {
+		if(name == null || name.isEmpty() || email == null || email.isEmpty()) {
 			throw new CreateUserFailedException();
 		}
 
@@ -154,7 +154,7 @@ public class LibraryManager {
 	 * Returns all works in the library
 	 * @return a  works in the library
 	 */
-	public Map<Integer, Work> getAllWorks(){
+	public List<Work> getAllWorks(){
 		return _library.getAllWorks();
 	}
 

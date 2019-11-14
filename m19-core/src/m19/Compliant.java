@@ -1,6 +1,8 @@
 package m19;
 
-public class Compliant extends Behaviour {
+import java.io.Serializable;
+
+public class Compliant extends Behaviour implements Serializable {
 	/**
 	 * @param user
 	 */

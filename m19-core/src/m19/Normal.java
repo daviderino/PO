@@ -1,6 +1,8 @@
 package m19;
 
-public class Normal extends Behaviour {
+import java.io.Serializable;
+
+public class Normal extends Behaviour implements Serializable {
 	/**
 	 * @param user
 	 */

@@ -1,5 +1,7 @@
 package m19.app.users;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import m19.LibraryManager;
@@ -22,6 +24,8 @@ public class DoShowUsers extends Command<LibraryManager> {
 	@Override
 	public final void execute() {
 		List<User> users = _receiver.getAllUsers();
+		Collections.sort(users);
+
 		for(User user: users) {
 			_display.addLine(user.toString());
 		}

@@ -18,8 +18,8 @@ public class DVD extends Work implements Serializable{
     
     @Override
     public String toString(){
-        return getId() +  " - " + getAvailableCopies() + " de " + getCount() + " - " + getType().toString() + " - " +
-            getTitle().toString() + " - " + getPrice() + " - " + getCategory().toString() + " - " + 
-            _director.toString() + " - " + String.valueOf(_IGAC).toString();
+        return getId() +  " - " + getAvailableCopies() + " de " + getCount() + " - " + getType() + " - " +
+            getTitle() + " - " + getPrice() + " - " + getCategory() + " - " + 
+            _director + " - " + String.valueOf(_IGAC);
     }
 }

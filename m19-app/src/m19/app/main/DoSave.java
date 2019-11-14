@@ -25,15 +25,19 @@ public class DoSave extends Command<LibraryManager> {
 	@Override
 	public final void execute() {
 		try {
-			if(_receiver.getFilename() == null) {
+			_receiver.save();
+		}
+		catch (MissingFileAssociationException ex) {
+			try {
 				_form.parse();
 				_receiver.saveAs(_filename.value());
 			}
-			else {
-				_receiver.save();
+			catch (MissingFileAssociationException | IOException e) {
+				e.printStackTrace();
 			}
-		} catch (MissingFileAssociationException | IOException e) {
-			e.printStackTrace();
+		}
+		catch (IOException ex) {
+			ex.printStackTrace();
 		}
 	}
 }

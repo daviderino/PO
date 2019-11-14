@@ -1,6 +1,6 @@
 package m19.app.works;
 
-import java.util.Map;
+import java.util.List;
 
 import m19.LibraryManager;
 import m19.Work;
@@ -21,8 +21,8 @@ public class DoDisplayWorks extends Command<LibraryManager> {
 	/** @see pt.tecnico.po.ui.Command#execute() */
 	@Override
 	public final void execute() {
-		Map<Integer, Work> works = _receiver.getAllWorks();
-		for(Work work: works.values()) {
+		List<Work> works = _receiver.getAllWorks();
+		for(Work work: works) {
 			_display.addLine(work.toString());
 		}
 		_display.display();

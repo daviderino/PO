@@ -18,8 +18,8 @@ public class Book extends Work implements Serializable {
     
     @Override
     public String toString(){
-        return getId() +  " - " + getAvailableCopies() + " de " + getCount() + " - " + getType().toString() + " - " +
-            getTitle().toString() + " - " + getPrice() + " - " + getCategory().toString() + " - " + 
-            _author.toString() + " - " + String.valueOf(_ISBN).toString();
+        return getId() +  " - " + getAvailableCopies() + " de " + getCount() + " - " + getType() + " - " +
+            getTitle() + " - " + getPrice() + " - " + getCategory() + " - " + 
+            _author + " - " + String.valueOf(_ISBN);
     }
 } 
