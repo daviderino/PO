@@ -9,7 +9,7 @@ public class User implements Serializable, Comparable<User> {
 	private int _id;
 	private String _name;
 	private String _email;
-	private boolean _state;         // true represents active, false represents inactive
+	private boolean _state; // true represents active, false represents inactive
 	private int _streak;
 	private Behaviour _behaviour;
 	private int _totalFines;
@@ -127,6 +127,8 @@ public class User implements Serializable, Comparable<User> {
 	}
 
 	/**
+	 * Compares 2 users by name ignoring upper/lower case. Compares by ids if names are equal
+	 *
 	 * @param user to compare to
 	 * @return value corresponding to the comparison
 	 */

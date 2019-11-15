@@ -23,9 +23,11 @@ public class LibraryManager {
 	}
 
 	/**
-	 * @throws MissingFileAssociationException
-	 * @throws IOException
-	 * @throws FileNotFoundException
+	 * Saves the current state of the library.
+	 *
+	 * @throws MissingFileAssociationException if the variable containing the file name is null
+	 * @throws IOException if there is a problem whilst the file
+	 * @throws FileNotFoundException if there is a problem whilst saving the file
 	 */
 	public void save() throws MissingFileAssociationException, IOException, FileNotFoundException {
 		if (_filename == null) {
@@ -45,9 +47,11 @@ public class LibraryManager {
 	}
 
 	/**
-	 * @param filename
-	 * @throws MissingFileAssociationException
-	 * @throws IOException
+	 * Saves the current state of the library with filename as the file name
+	 *
+	 * @param filename of the file to save as
+	 * @throws MissingFileAssociationException if the variable containing the name is empty
+	 * @throws IOException if there is a problem when saving
 	 */
 	public void saveAs(String filename) throws MissingFileAssociationException, IOException {
 		_filename = filename;
@@ -55,10 +59,10 @@ public class LibraryManager {
 	}
 
 	/**
-	 * @param filename name of the file
-	 * @throws FailedToOpenFileException
-	 * @throws IOException
-	 * @throws ClassNotFoundException
+	 * Loads a given file and changes the falg controlling whether or not the library has changed
+	 *
+	 * @param filename name of the file to load
+	 * @throws FailedToOpenFileException if there is a problem when opening or processing the file
 	 */
 	public void load(String filename) throws FailedToOpenFileException, IOException, ClassNotFoundException {
 		try {
@@ -68,29 +72,36 @@ public class LibraryManager {
 			_filename = filename;
 			inputStream.close();
 			_libChanged = false;
-		} catch (ClassNotFoundException | IOException ex) {
+		}
+		catch (ClassNotFoundException | IOException ex) {
 			throw new FailedToOpenFileException(filename);
 		}
 	}
 
 	/**
-	 * @param datafile
-	 * @throws ImportFileException
+	 * Calls importFile(datafile) in the library
+	 * Throws exceptions if there are problems whilst processing the file
+	 *
+	 * @param datafile to import
+	 * @throws ImportFileException if there is a IO problem or a wrong entry whilst processing the input file
 	 */
 	public void importFile(String datafile) throws ImportFileException {
 		try {
 			_library.importFile(datafile);
 			_libChanged = true;
-		} catch (IOException | BadEntrySpecificationException e) {
+		}
+		catch (IOException | BadEntrySpecificationException e) {
 			throw new ImportFileException(e);
 		}
 	}
 
 	/**
-	 * Adds a user to the user aggregation in library
+	 * Calls createUser(name, email) in the library
+	 * Validates the input and throws an exception if parameters have bad values
 	 *
 	 * @param name  of the user
 	 * @param email of the user
+	 * @throws CreateUserFailedException if values are null or empty
 	 * @return the id of the user registered
 	 */
 	public int createUser(String name, String email) throws CreateUserFailedException {
@@ -104,7 +115,7 @@ public class LibraryManager {
 	}
 
 	/**
-	 * Returns a user with a given id
+	 * Calls getUser(id) from the library
 	 *
 	 * @param id of the user to get
 	 * @return the user
@@ -121,21 +132,15 @@ public class LibraryManager {
 	/**
 	 * Calls getAllUsers() from library
 	 *
-	 * @return a sorted list containing the users
+	 * @return a list containing the users
 	 */
 	public List<User> getAllUsers() {
 		return _library.getAllUsers();
 	}
 
 	/**
-	 * @return the filename
-	 */
-	public String getFilename() {
-		return _filename;
-	}
-
-	/**
-	 * Returns a work in the library
+	 * Calls getWork(id) from the library
+	 *
 	 * @param id of the work to get
 	 * @return the work
 	 */
@@ -150,7 +155,8 @@ public class LibraryManager {
 	}
 
 	/**
-	 * Returns all works in the library
+	 * Calls getAllWorks() from the library
+	 *
 	 * @return a  works in the library
 	 */
 	public List<Work> getAllWorks(){
@@ -158,7 +164,7 @@ public class LibraryManager {
 	}
 
 	/**
-	 * Advances the date and updates users states
+	 * Calls advanceDate(n) from the library
 	 *
 	 * @param n number of days to advance
 	 */
@@ -168,11 +174,23 @@ public class LibraryManager {
 	}
 
 	/**
+	 * Calls getDate() from the library
+	 *
 	 * @return the date
 	 */
 	public int getDate() {
 		return _library.getDate();
   }
+
+	/**
+	 * Gets the filename value
+	 *
+	 * @return the filename
+	 */
+	public String getFilename() {
+		return _filename;
+	}
+
 
 	/**
 	 * @return the state of the lib, if it has changed true, false otherwise

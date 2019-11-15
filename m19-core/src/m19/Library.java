@@ -26,6 +26,7 @@ public class Library implements Serializable {
 	 * Registers a work from the given fields in the Map
 	 *
 	 * @param fields with the work's info
+	 * @throws BadEntrySpecificationException if a problem occurs when registering (parse gone wrong or null pointer)
 	 */
 	private void registerWork(String[] fields) throws BadEntrySpecificationException {
 		int id = _workId++;
@@ -57,9 +58,10 @@ public class Library implements Serializable {
 	}
 
 	/**
-	 * Registers a user in the map
+	 * Registers a user from the given fields in the Map
 	 *
 	 * @param fields with the user's info
+	 * @throws BadEntrySpecificationException if one of the fields is null or empty
 	 */
 	private void registerUser(String[] fields) throws BadEntrySpecificationException {
 		int id = _userId++;
@@ -71,7 +73,10 @@ public class Library implements Serializable {
 	}
 
 	/**
-	 * @param fields to register
+	 * Registers a user or a work from the given fields, depending on the first field
+	 * 
+	 * @param fields of the entity ro register
+	 * @throws BadEntrySpecificationException if the fields can't be assigned to a user or a work
 	 */
 	private void registerFromFields(String[] fields) throws BadEntrySpecificationException {
 		final Pattern patternWork = Pattern.compile("^(BOOK|DVD)");
@@ -82,6 +87,8 @@ public class Library implements Serializable {
 		}
 		else if(patternUser.matcher(fields[0]).matches()) {
 			registerUser(fields);
+		}else{
+			throw new BadEntrySpecificationException(Arrays.toString(fields));
 		}
 	}
 
@@ -89,10 +96,9 @@ public class Library implements Serializable {
 	 * Read the text input file at the beginning of the program and populates the
 	 * instances of the various possible types (books, DVDs, users).
 	 *
-	 * @param filename
-	 *          name of the file to load
-	 * @throws BadEntrySpecificationException
-	 * @throws IOException
+	 * @param filename name of the file to load
+	 * @throws BadEntrySpecificationException if there is a problem when registering the fields
+	 * @throws IOException if a problem occurs when opening the file
 	 */
 	void importFile(String filename) throws BadEntrySpecificationException, IOException {
 		BufferedReader reader = new BufferedReader(new FileReader(filename));
@@ -110,9 +116,9 @@ public class Library implements Serializable {
 	/**
 	 * Creates a user and returns its id
 	 *
-	 * @param name  of the user
-	 * @param email of the user
-	 * @return the id of the user
+	 * @param name of the user to create
+	 * @param email of the user to create
+	 * @return the id of the user created
 	 */
 	public int createUser(String name, String email)  {
 		User user = new User(_userId++, name, email);
@@ -122,7 +128,8 @@ public class Library implements Serializable {
 
 	/**
 	 * Gets a user with a given id
-	 * @param id of the user
+	 *
+	 * @param id of the user to get
 	 * @return the user
 	 */
 	public User getUser(int id) {
@@ -130,9 +137,9 @@ public class Library implements Serializable {
     }
 
 	/**
-	 * Gets a list of the users sorted by name or if the names are equal, by id
+	 * Gets a List of the users registered in the library
 	 *
-	 * @return a list containing the sorted users
+	 * @return a List containing the users
 	 */
 	public List<User> getAllUsers() {
 	    List<User> usersList = new LinkedList<>();
@@ -142,6 +149,7 @@ public class Library implements Serializable {
 
 	/**
 	 * Gets a work with a given id
+	 * 
 	 * @param id of the work
 	 * @return the work
 	 */
@@ -150,8 +158,9 @@ public class Library implements Serializable {
 	}
 
 	/**
-	 * Gets all works in library
-	 * @return a Map of all of the works
+	 * Gets a List of all the works in the library
+	 * 
+	 * @return a List of all of the works
 	 */
 	public List<Work> getAllWorks(){
 		List<Work> worksList = new LinkedList<>();
@@ -160,7 +169,8 @@ public class Library implements Serializable {
 	}
 
 	/**
-	 * Gets the date
+	 * Gets value of the date
+	 *
 	 * @return the date
 	 */
 	public int getDate() {
@@ -168,13 +178,14 @@ public class Library implements Serializable {
   }
   
    /**
-	 * Advances the date
+	 * Advances the date n days
+    *
 	 * @param n number of days to advance
 	 */
 	public void advanceDate(int n){
 		if(n > 0){
 			date = date + n;
-			/*Verify Requests */
+			/* Verify Requests */
 		}
 	}
 }

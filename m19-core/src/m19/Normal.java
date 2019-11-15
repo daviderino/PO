@@ -11,9 +11,6 @@ public class Normal extends Behaviour implements Serializable {
 		_maxRequests = 3;
 	}
 
-	/**
-	 *
-	 */
 	@Override
 	public void update() {
 		// if rules, change state

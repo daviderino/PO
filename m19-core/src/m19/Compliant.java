@@ -16,9 +16,6 @@ public class Compliant extends Behaviour implements Serializable {
 		// Same thing
 	}
 
-	/**
-	 * @return
-	 */
 	@Override
 	public String toString() {
 		return "CUMPRIDOR";
