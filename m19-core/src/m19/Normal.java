@@ -7,8 +7,7 @@ public class Normal extends Behaviour implements Serializable {
 	 * @param user
 	 */
 	public Normal(User user) {
-		super(user);
-		_maxRequests = 3;
+		super(user, 3);
 	}
 
 	@Override

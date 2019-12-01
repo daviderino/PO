@@ -2,7 +2,14 @@ package m19;
 
 import m19.exceptions.*;
 
-import java.io.*;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.BufferedOutputStream;
+import java.io.ObjectInputStream;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
 import java.util.List;
 
 /**
@@ -12,7 +19,6 @@ public class LibraryManager {
 
 	private Library _library;
 	private String _filename;
-	private boolean _libChanged = true; // variable which controls whether the library has been changed or not
 
 	/**
 	 * Creates a new object to allow to import files
@@ -23,7 +29,7 @@ public class LibraryManager {
 	}
 
 	/**
-	 * Saves the current state of the library.
+	 * Saves the current state of the library
 	 *
 	 * @throws MissingFileAssociationException if the variable containing the file name is null
 	 * @throws IOException if there is a problem whilst the file
@@ -34,7 +40,7 @@ public class LibraryManager {
 			throw new MissingFileAssociationException();
 		}
 
-		if (!_libChanged) {
+		if (!_library.getLibChanged()) {
 			return;
 		}
 
@@ -43,7 +49,7 @@ public class LibraryManager {
 
 		outputStream.writeObject(_library);
 		outputStream.close();
-		_libChanged = false;
+		_library.setLibChanged(false);
 	}
 
 	/**
@@ -71,7 +77,7 @@ public class LibraryManager {
 			_library = (Library) inputStream.readObject();
 			_filename = filename;
 			inputStream.close();
-			_libChanged = false;
+			_library.setLibChanged(false);
 		}
 		catch (ClassNotFoundException | IOException ex) {
 			throw new FailedToOpenFileException(filename);
@@ -88,7 +94,7 @@ public class LibraryManager {
 	public void importFile(String datafile) throws ImportFileException {
 		try {
 			_library.importFile(datafile);
-			_libChanged = true;
+			_library.setLibChanged(true);
 		}
 		catch (IOException | BadEntrySpecificationException e) {
 			throw new ImportFileException(e);
@@ -105,12 +111,8 @@ public class LibraryManager {
 	 * @return the id of the user registered
 	 */
 	public int createUser(String name, String email) throws CreateUserFailedException {
-		if(name == null || name.isEmpty() || email == null || email.isEmpty()) {
-			throw new CreateUserFailedException();
-		}
-
 		int ret = _library.createUser(name, email);
-		_libChanged = true;
+		_library.setLibChanged(true);
 		return ret;
 	}
 
@@ -121,12 +123,7 @@ public class LibraryManager {
 	 * @return the user
 	 */
 	public User getUser(int id) throws GetUserFailedException {
-		User user = _library.getUser(id);
-		
-		if(user == null) {
-			throw new GetUserFailedException();
-		}
-		return user;
+		return _library.getUser(id);
 	}
 
 	/**
@@ -145,13 +142,7 @@ public class LibraryManager {
 	 * @return the work
 	 */
 	public Work getWork(int id) throws GetWorkFailedException {
-		Work work = _library.getWork(id);
-
-		if(work == null) {
-			throw new GetWorkFailedException();
-		}
-
-		return work;
+		return _library.getWork(id);
 	}
 
 	/**
@@ -170,7 +161,7 @@ public class LibraryManager {
 	 */
 	public void advanceDate(int n){
 		_library.advanceDate(n);
-		_libChanged = true;
+		_library.setLibChanged(true);
 	}
 
 	/**
@@ -181,21 +172,4 @@ public class LibraryManager {
 	public int getDate() {
 		return _library.getDate();
   }
-
-	/**
-	 * Gets the filename value
-	 *
-	 * @return the filename
-	 */
-	public String getFilename() {
-		return _filename;
-	}
-
-
-	/**
-	 * @return the state of the lib, if it has changed true, false otherwise
-	 */
-	public boolean getLibChanged() {
-		return _libChanged;
-	}
 }

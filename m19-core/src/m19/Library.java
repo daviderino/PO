@@ -1,6 +1,6 @@
 package m19;
 
-import m19.exceptions.BadEntrySpecificationException;
+import m19.exceptions.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -17,7 +17,8 @@ public class Library implements Serializable {
 	private static final long serialVersionUID = 201901101348L;
 	private int _userId = 0;
 	private int _workId = 0;
-	private int date = 0;
+	private int _date = 0;
+	private boolean _libChanged = true; // variable which controls whether the library has been changed or not
 
 	private Map<Integer, User> _users = new HashMap<Integer, User>();
 	private Map<Integer, Work> _works = new TreeMap<Integer, Work>();
@@ -118,9 +119,13 @@ public class Library implements Serializable {
 	 *
 	 * @param name of the user to create
 	 * @param email of the user to create
+	 * @throws CreateUserFailedException if values are null or empty
 	 * @return the id of the user created
 	 */
-	public int createUser(String name, String email)  {
+	public int createUser(String name, String email) throws CreateUserFailedException {
+		if(name == null || name.isEmpty() || email == null || email.isEmpty()) {
+			throw new CreateUserFailedException();
+		}
 		User user = new User(_userId++, name, email);
 		_users.put(user.getId(), user);
 		return user.getId();
@@ -130,10 +135,15 @@ public class Library implements Serializable {
 	 * Gets a user with a given id
 	 *
 	 * @param id of the user to get
+	 * @throws GetUserFailedException if it doesn't find the user
 	 * @return the user
 	 */
-	public User getUser(int id) {
-		return _users.get(id);
+	public User getUser(int id) throws GetUserFailedException {
+		User user = _users.get(id);
+		if(user == null) {
+			throw new GetUserFailedException();
+		}
+		return user;
     }
 
 	/**
@@ -151,10 +161,15 @@ public class Library implements Serializable {
 	 * Gets a work with a given id
 	 * 
 	 * @param id of the work
+	 * @throws GetWorkFailedException if it doesn't find the work
 	 * @return the work
 	 */
-	public Work getWork(int id){
-		return _works.get(id);
+	public Work getWork(int id) throws GetWorkFailedException {
+		Work work = _works.get(id);
+		if(work == null) {
+			throw new GetWorkFailedException();
+		}
+		return work;
 	}
 
 	/**
@@ -174,18 +189,32 @@ public class Library implements Serializable {
 	 * @return the date
 	 */
 	public int getDate() {
-		return date;
+		return _date;
   }
   
-   /**
+    /**
 	 * Advances the date n days
-    *
+     *
 	 * @param n number of days to advance
-	 */
-	public void advanceDate(int n){
-		if(n > 0){
-			date = date + n;
+     */
+    public void advanceDate(int n){
+   	if(n > 0){
+			_date = _date + n;
 			/* Verify Requests */
 		}
+	}
+
+	/**
+	 * @param changed state of the library to change to
+	 */
+	public void setLibChanged(boolean changed) {
+    	_libChanged = changed;
+	}
+
+	/**
+	 * @return state of the library
+	 */
+	public boolean getLibChanged() {
+    	return _libChanged;
 	}
 }

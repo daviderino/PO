@@ -46,11 +46,22 @@ public abstract class Work implements Serializable {
         return _category.getName();
     }
 
+    public abstract String getCreator();
+    public abstract String getFormalIdentifier();
+    public abstract String getType();
+
     public void incrementCount() {
         _availableCopies++;
     } 
 
-    public void decrementCount() /*Exception ? */{
+    public void decrementCount() {
         _availableCopies--;
+    }
+
+    @Override
+    public String toString() {
+        return getId() +  " - " + getAvailableCopies() + " de " + getCount() + " - " + getType() + " - " +
+                getTitle() + " - " + getPrice() + " - " + getCategory() + " - " +
+                getCreator() + " - " + getFormalIdentifier();
     }
 }

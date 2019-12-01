@@ -3,15 +3,17 @@ package m19;
 import java.io.Serializable;
 
 public abstract class Behaviour implements Serializable {
-	protected User _user;
-	protected int _maxRequests;
+	private User _user;
+	private int _maxRequests;
 
 	/**
 	 * @param user
+	 * @param maxRequests
 	 */
-	public Behaviour(User user) {
+	public Behaviour(User user, int maxRequests) {
 		_user = user;
+		_maxRequests = maxRequests;
 	}
 
-	public abstract  void update();
+	public abstract void update();
 }

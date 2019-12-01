@@ -12,6 +12,17 @@ public class DVD extends Work implements Serializable{
         _IGAC = IGAC.toCharArray(); 
     }
 
+    @Override
+    public String getCreator() {
+        return _director;
+    }
+
+    @Override
+    public String getFormalIdentifier() {
+        return String.valueOf(_IGAC);
+    }
+
+    @Override
     public String getType(){
         return "DVD";
     }

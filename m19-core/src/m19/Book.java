@@ -12,6 +12,17 @@ public class Book extends Work implements Serializable {
         _ISBN = ISBN.toCharArray(); 
     }
 
+    @Override
+    public String getCreator() {
+        return _author;
+    }
+
+    @Override
+    public String getFormalIdentifier() {
+        return String.valueOf(_ISBN);
+    }
+
+    @Override
     public String getType(){
         return "Livro";
     }

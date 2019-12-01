@@ -7,8 +7,7 @@ public class NonCompliant extends Behaviour implements Serializable {
 	 * @param user
 	 */
 	public NonCompliant(User user) {
-		super(user);
-		_maxRequests = 1;
+		super(user, 1);
 	}
 
 	/**

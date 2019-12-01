@@ -7,8 +7,7 @@ public class Compliant extends Behaviour implements Serializable {
 	 * @param user
 	 */
 	public Compliant(User user) {
-		super(user);
-		_maxRequests = 5;
+		super(user, 5);
 	}
 
 	@Override
