@@ -115,6 +115,30 @@ public class Library implements Serializable {
 	}
 
 	/**
+	 * Advances the date n days
+	 *
+	 * @param n number of days to advance
+	 */
+	public void advanceDate(int n){
+		if(n > 0) {
+			_date = _date + n;
+
+			for(User user: _users.values()) {
+				int streak = 0;
+
+				boolean isBehaving = true;
+
+				for(Request request: user.getRequests()) {
+					if(request.getOnTime() && request.getReturnDate() < _date) {
+						request.setOnTime(false);
+						user.behavedPoorly();
+					}
+				}
+			}
+		}
+	}
+
+	/**
 	 * Creates a user and returns its id
 	 *
 	 * @param name of the user to create
@@ -191,30 +215,18 @@ public class Library implements Serializable {
 	public int getDate() {
 		return _date;
   }
-  
-    /**
-	 * Advances the date n days
-     *
-	 * @param n number of days to advance
-     */
-    public void advanceDate(int n){
-   	if(n > 0){
-			_date = _date + n;
-			/* Verify Requests */
-		}
-	}
 
 	/**
 	 * @param changed state of the library to change to
 	 */
 	public void setLibChanged(boolean changed) {
-    	_libChanged = changed;
+		_libChanged = changed;
 	}
 
 	/**
 	 * @return state of the library
 	 */
 	public boolean getLibChanged() {
-    	return _libChanged;
+		return _libChanged;
 	}
 }

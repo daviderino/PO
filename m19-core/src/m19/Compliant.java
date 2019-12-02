@@ -11,8 +11,13 @@ public class Compliant extends Behaviour implements Serializable {
 	}
 
 	@Override
-	public void update() {
-		// Same thing
+	public void returnOnTime() {
+
+	}
+
+	@Override
+	public void returnLate() {
+
 	}
 
 	@Override

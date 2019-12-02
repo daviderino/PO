@@ -11,8 +11,13 @@ public class Normal extends Behaviour implements Serializable {
 	}
 
 	@Override
-	public void update() {
-		// if rules, change state
+	public void returnOnTime() {
+
+	}
+
+	@Override
+	public void returnLate() {
+
 	}
 
 	@Override

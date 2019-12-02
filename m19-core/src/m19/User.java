@@ -1,18 +1,20 @@
 package m19;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class that represents the concept of user
  */
 public class User implements Serializable, Comparable<User> {
 	private int _id;
+	private int _totalFines;
+	private boolean _isActive;
 	private String _name;
 	private String _email;
-	private boolean _state; // true represents active, false represents inactive
-	private int _streak;
 	private Behaviour _behaviour;
-	private int _totalFines;
+	private List<Request> _requests;
 
 	/**
 	 *
@@ -24,10 +26,10 @@ public class User implements Serializable, Comparable<User> {
 		_id = id;
 		_name = name;
 		_email = email;
-		_state = true;
-		_streak = 0;
-		_behaviour = new Normal(this);
 		_totalFines = 0;
+		_isActive = true;
+		_behaviour = new Normal(this);
+		_requests = new ArrayList<Request>();
 	}
 
 	/**
@@ -66,10 +68,17 @@ public class User implements Serializable, Comparable<User> {
 	}
 
 	/**
+	 * @return the requests list
+	 */
+	public List<Request> getRequests() {
+		return _requests;
+	}
+
+	/**
 	 * @return the corresponding string of the user's state
 	 */
-	public String getState() {
-		if(_state) {
+	public String getIsActive() {
+		if(_isActive) {
 			return "ACTIVO";
 		}
 		else {
@@ -78,40 +87,23 @@ public class User implements Serializable, Comparable<User> {
 	}
 
 	/**
-	 * Increments the var containing the number of days the user has abidden by the rules
-	 */
-	public void incrementStreak() {
-		if(_streak < 0) {
-			_streak = 0;
-			_streak++;
-			updateBehaviour();
-		}
-	}
-
-	/**
-	 * Decrements the var containing the number of days the user has abidden by the rules
-	 */
-	public void decrementStreak() {
-		if(_streak > 0) {
-			_streak = 0;
-			_streak--;
-			updateBehaviour();
-		}
-	}
-
-	/**
-	 * Sets the state of the user to state. True means user is active, false means user is inactive
+	 * Sets isActive of the user to state. True means user is active, false means user is inactive
 	 * @param state to set the user to
 	 */
-	public void updateState(boolean state) {
-		_state = state;
+	public void setIsActive(boolean state) {
+		_isActive = state;
 	}
 
-	/**
-	 * Updates users behaviour accordingly
-	 */
-	private void updateBehaviour() {
-		_behaviour.update();
+	public void behavedProperly() {
+		_behaviour.behavedProperly();
+	}
+
+	public void behavedPoorly() {
+		_behaviour.behavedPoorly();
+	}
+
+	public void addFine(int fine) {
+		_totalFines += fine;
 	}
 
 	/**
@@ -123,7 +115,7 @@ public class User implements Serializable, Comparable<User> {
 
 	@Override
 	public String toString() {
-		return getId() + " - " + getName() + " - " + getEmail() + " - " + getBehaviour() + " - " + getState();
+		return getId() + " - " + getName() + " - " + getEmail() + " - " + getBehaviour() + " - " + getIsActive();
 	}
 
 	/**

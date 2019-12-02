@@ -15,5 +15,6 @@ public abstract class Behaviour implements Serializable {
 		_maxRequests = maxRequests;
 	}
 
-	public abstract void update();
+	public abstract void behavedProperly();
+	public abstract void behavedPoorly();
 }

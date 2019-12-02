@@ -10,12 +10,14 @@ public class NonCompliant extends Behaviour implements Serializable {
 		super(user, 1);
 	}
 
-	/**
-	 *
-	 */
 	@Override
-	public void update() {
-		// Same thing again
+	public void returnOnTime() {
+
+	}
+
+	@Override
+	public void returnLate() {
+
 	}
 
 	/**
