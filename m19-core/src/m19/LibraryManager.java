@@ -111,9 +111,7 @@ public class LibraryManager {
 	 * @return the id of the user registered
 	 */
 	public int createUser(String name, String email) throws CreateUserFailedException {
-		int ret = _library.createUser(name, email);
-		_library.setLibChanged(true);
-		return ret;
+		return _library.createUser(name, email);
 	}
 
 	/**
@@ -161,7 +159,6 @@ public class LibraryManager {
 	 */
 	public void advanceDate(int n){
 		_library.advanceDate(n);
-		_library.setLibChanged(true);
 	}
 
 	/**
@@ -172,4 +169,13 @@ public class LibraryManager {
 	public int getDate() {
 		return _library.getDate();
   }
+
+	/**
+	 * @param userId user to pay the fime
+	 * @throws GetUserFailedException in case the user does not exist
+	 * @throws ActiveUserException in case the user is active
+	 */
+    public void payFine(int userId) throws GetUserFailedException, ActiveUserException {
+		_library.payFine(userId);
+    }
 }

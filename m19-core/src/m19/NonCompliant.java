@@ -7,22 +7,22 @@ public class NonCompliant extends Behaviour implements Serializable {
 	 * @param user
 	 */
 	public NonCompliant(User user) {
-		super(user, 1);
+		super(user, 1, 0, 3);
 	}
 
 	@Override
-	public void returnOnTime() {
-
+	public void behavedProperly() {
+		incrementGoodStreak();
+		if(getGoodStreak() == 3) {
+			getUser().setBehaviour(new Normal(getUser(), 3, 0));
+		}
 	}
 
 	@Override
-	public void returnLate() {
-
+	public void behavedPoorly() {
+		// do nothing
 	}
 
-	/**
-	 *
-	 */
 	@Override
 	public String toString() {
 		return "FALTOSO";

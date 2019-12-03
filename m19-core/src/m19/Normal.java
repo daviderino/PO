@@ -6,18 +6,25 @@ public class Normal extends Behaviour implements Serializable {
 	/**
 	 * @param user
 	 */
-	public Normal(User user) {
-		super(user, 3);
+
+    public Normal(User user, int goodStreak, int badStreak) {
+        super(user, 3, goodStreak, badStreak);
 	}
 
 	@Override
-	public void returnOnTime() {
-
+	public void behavedProperly() {
+		incrementGoodStreak();
+		if(getGoodStreak()  == 5) {
+			getUser().setBehaviour(new Compliant(getUser()));
+		}
 	}
 
 	@Override
-	public void returnLate() {
-
+	public void behavedPoorly() {
+		incrementBadStreak();
+		if(getBadStreak()  == 3) {
+			getUser().setBehaviour(new NonCompliant(getUser()));
+		}
 	}
 
 	@Override

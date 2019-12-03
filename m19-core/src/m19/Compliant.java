@@ -7,17 +7,17 @@ public class Compliant extends Behaviour implements Serializable {
 	 * @param user
 	 */
 	public Compliant(User user) {
-		super(user, 5);
+		super(user, 5, 5, 0);
 	}
 
 	@Override
-	public void returnOnTime() {
-
+	public void behavedProperly() {
+		// do nothing
 	}
 
 	@Override
-	public void returnLate() {
-
+	public void behavedPoorly() {
+		getUser().setBehaviour(new Normal(getUser(), 0, 1));
 	}
 
 	@Override

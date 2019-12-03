@@ -1,6 +1,7 @@
 package m19;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 public abstract class Work implements Serializable {
 
@@ -12,6 +13,8 @@ public abstract class Work implements Serializable {
     private int _price;
     private int _availableCopies;
     private Category _category;
+    private HashMap<String, Integer> _requestDays;
+    //private int[] _requestDays; // [normal, complaint, noncompliant]
 
     public Work(int id, String title, int price, Category category, int count) {
         _id = id;
@@ -20,6 +23,25 @@ public abstract class Work implements Serializable {
         _title = title;
         _price = price;
         _category = category;
+
+        _requestDays = new HashMap<String, Integer>();
+
+        // this is bad
+        if(count == 1) {
+            _requestDays.put("NORMAL", 3);
+            _requestDays.put("CUMPRIDOR", 8);
+            _requestDays.put("FALTOSO", 2);
+        }
+        else if(count > 1 && count <= 5) {
+            _requestDays.put("NORMAL", 8);
+            _requestDays.put("CUMPRIDOR", 15);
+            _requestDays.put("FALTOSO", 2);
+        }
+        else {
+            _requestDays.put("NORMAL", 15);
+            _requestDays.put("CUMPRIDOR", 30);
+            _requestDays.put("FALTOSO", 2);
+        }
     }
 
     public String getTitle() {
@@ -42,7 +64,11 @@ public abstract class Work implements Serializable {
         return _id;
     }
 
-    public String getCategory(){
+    public Category getCategory(){
+        return _category;
+    }
+
+    public String category() {
         return _category.getName();
     }
 
@@ -58,10 +84,14 @@ public abstract class Work implements Serializable {
         _availableCopies--;
     }
 
+    public int computeReturnDate(User user) {
+        return _requestDays.get(user.getBehaviour());
+    }
+
     @Override
     public String toString() {
         return getId() +  " - " + getAvailableCopies() + " de " + getCount() + " - " + getType() + " - " +
-                getTitle() + " - " + getPrice() + " - " + getCategory() + " - " +
+                getTitle() + " - " + getPrice() + " - " + category() + " - " +
                 getCreator() + " - " + getFormalIdentifier();
     }
 }

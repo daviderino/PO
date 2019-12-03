@@ -1,5 +1,7 @@
 package m19;
 
+import m19.exceptions.ActiveUserException;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +30,7 @@ public class User implements Serializable, Comparable<User> {
 		_email = email;
 		_totalFines = 0;
 		_isActive = true;
-		_behaviour = new Normal(this);
+		_behaviour = new Normal(this, 0, 0);
 		_requests = new ArrayList<Request>();
 	}
 
@@ -56,8 +58,8 @@ public class User implements Serializable, Comparable<User> {
 	/**
 	 * @return the corresponding string of the user's behaviour
 	 */
-	public String getBehaviour() {
-		return _behaviour.toString();
+	public Behaviour getBehaviour() {
+		return _behaviour;
 	}
 
 	/**
@@ -75,15 +77,33 @@ public class User implements Serializable, Comparable<User> {
 	}
 
 	/**
+	 * @return true if the user is active, false otherwise
+	 */
+	public boolean getIsActive() {
+		return _isActive;
+	}
+
+	public String behaviour() {
+		return _behaviour.toString();
+	}
+
+	/**
 	 * @return the corresponding string of the user's state
 	 */
-	public String getIsActive() {
+	public String isActive() {
 		if(_isActive) {
 			return "ACTIVO";
 		}
 		else {
 			return "SUSPENSO - EUR " + getTotalFines();
 		}
+	}
+
+	/**
+	 * @return the number of requests a user can make
+	 */
+	public int getMaxRequests() {
+		return _behaviour.getMaxRequests();
 	}
 
 	/**
@@ -94,14 +114,30 @@ public class User implements Serializable, Comparable<User> {
 		_isActive = state;
 	}
 
+	/**
+	 * @param behaviour state to change to
+	 */
+	public void setBehaviour(Behaviour behaviour) {
+		_behaviour = behaviour;
+	}
+
+	/**
+	 * 	Call state method
+	 */
 	public void behavedProperly() {
 		_behaviour.behavedProperly();
 	}
 
+	/**
+	 * Call state method
+	 */
 	public void behavedPoorly() {
 		_behaviour.behavedPoorly();
 	}
 
+	/**
+	 * @param fine to add
+	 */
 	public void addFine(int fine) {
 		_totalFines += fine;
 	}
@@ -109,13 +145,13 @@ public class User implements Serializable, Comparable<User> {
 	/**
 	 * Pays a fine
 	 */
-	public void payFine() {
-		// TODO: Implement later. Terceira entrega
-	}
-
-	@Override
-	public String toString() {
-		return getId() + " - " + getName() + " - " + getEmail() + " - " + getBehaviour() + " - " + getIsActive();
+	public void payFine() throws ActiveUserException {
+		if(!_isActive && _totalFines >= 5) {
+			_totalFines -= 5;
+		}
+		else {
+			throw new ActiveUserException();
+		}
 	}
 
 	/**
@@ -135,4 +171,10 @@ public class User implements Serializable, Comparable<User> {
 			return ret;
 		}
 	}
+
+	@Override
+	public String toString() {
+		return getId() + " - " + getName() + " - " + getEmail() + " - " + behaviour() + " - " + isActive();
+	}
+
 }

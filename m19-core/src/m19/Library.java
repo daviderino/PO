@@ -22,6 +22,29 @@ public class Library implements Serializable {
 
 	private Map<Integer, User> _users = new HashMap<Integer, User>();
 	private Map<Integer, Work> _works = new TreeMap<Integer, Work>();
+	
+	/**
+	 * Gets value of the date
+	 *
+	 * @return the date
+	 */
+	public int getDate() {
+		return _date;
+    }
+
+	/**
+	 * @param changed state of the library to change to
+	 */
+	public void setLibChanged(boolean changed) {
+		_libChanged = changed;
+	}
+
+	/**
+	 * @return state of the library
+	 */
+	public boolean getLibChanged() {
+		return _libChanged;
+    }
 
 	/**
 	 * Registers a work from the given fields in the Map
@@ -124,17 +147,16 @@ public class Library implements Serializable {
 			_date = _date + n;
 
 			for(User user: _users.values()) {
-				int streak = 0;
-
-				boolean isBehaving = true;
-
 				for(Request request: user.getRequests()) {
 					if(request.getOnTime() && request.getReturnDate() < _date) {
 						request.setOnTime(false);
+						user.setIsActive(false);
+						user.addFine(5);
 						user.behavedPoorly();
 					}
 				}
 			}
+			_libChanged = true;
 		}
 	}
 
@@ -152,6 +174,7 @@ public class Library implements Serializable {
 		}
 		User user = new User(_userId++, name, email);
 		_users.put(user.getId(), user);
+		_libChanged = true;
 		return user.getId();
 	}
 
@@ -208,25 +231,41 @@ public class Library implements Serializable {
 	}
 
 	/**
-	 * Gets value of the date
-	 *
-	 * @return the date
+	 * @param userId of the user to pay the fine of
+	 * @throws ActiveUserException if user has no fines to pay or is not suspended
 	 */
-	public int getDate() {
-		return _date;
-  }
-
-	/**
-	 * @param changed state of the library to change to
-	 */
-	public void setLibChanged(boolean changed) {
-		_libChanged = changed;
+	public void payFine(int userId) throws ActiveUserException {
+		_users.get(userId).payFine();
+		_libChanged = true;
 	}
 
 	/**
-	 * @return state of the library
+	 * Requests a work
+	 *
+	 * @param userId user that is requesting
+	 * @param workId work that is being requested
+	 * @throws RuleDeclinedException if a rule fails
 	 */
-	public boolean getLibChanged() {
-		return _libChanged;
+	public void requestWork(int userId, int workId) throws RuleDeclinedException {
+		User user = _users.get(userId);
+		Work work = _works.get(workId);
+
+		RuleSet rules = new RuleSet(user, work);
+		rules.addRule(new RuleCantHaveNRequests(user, work));
+		rules.addRule(new RuleCantRequestExpensiveWork(user, work));
+		rules.addRule(new RuleCantRequestReference(user, work));
+		rules.addRule(new RuleCantRequestTwice(user, work));
+		rules.addRule(new RuleNoCopiesAvailable(user, work));
+		rules.addRule(new RuleUserNotSuspended(user, work));
+
+		if(user != null && work != null) {
+			if(rules.validate()) {
+				int returnDate = work.computeReturnDate(user);
+				Request request = new Request(user, work, returnDate);
+			}
+			else {
+				throw new RuleDeclinedException(false);
+			}
+		}
 	}
 }
