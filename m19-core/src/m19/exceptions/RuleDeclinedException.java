@@ -1,13 +1,13 @@
 package m19.exceptions;
 
 public class RuleDeclinedException extends Exception {
-	private boolean _noCopies = false;
+	private int _id;
 
-	public RuleDeclinedException(boolean noCopies) {
-		_noCopies = noCopies;
+	public RuleDeclinedException(int id) {
+		_id = id;
 	}
 
-	public boolean getNoCopies() {
-		return _noCopies;
+	public int getFailedRuledId() {
+		return _id;
 	}
 }

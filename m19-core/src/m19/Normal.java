@@ -8,7 +8,7 @@ public class Normal extends Behaviour implements Serializable {
 	 */
 
     public Normal(User user, int goodStreak, int badStreak) {
-        super(user, 3, goodStreak, badStreak);
+        super(user, 3, goodStreak, badStreak, false, new int[] {3, 8, 15});
 	}
 
 	@Override

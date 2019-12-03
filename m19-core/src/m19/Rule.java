@@ -2,7 +2,9 @@ package m19;
 
 import m19.exceptions.RuleDeclinedException;
 
-public abstract class Rule {
+import java.io.Serializable;
+
+public abstract class Rule implements Serializable {
 	private User _user;
 	private Work _work;
 

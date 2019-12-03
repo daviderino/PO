@@ -178,4 +178,8 @@ public class LibraryManager {
     public void payFine(int userId) throws GetUserFailedException, ActiveUserException {
 		_library.payFine(userId);
     }
+
+    public int requestWork(int userId, int workId) throws RuleDeclinedException, GetUserFailedException, GetWorkFailedException {
+    	return _library.requestWork(userId, workId);
+    }
 }

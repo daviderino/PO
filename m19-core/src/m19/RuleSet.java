@@ -2,10 +2,11 @@ package m19;
 
 import m19.exceptions.RuleDeclinedException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RuleSet extends Rule {
+public class RuleSet extends Rule implements Serializable {
 	private List<Rule> _rules;
 
 	public RuleSet(User user, Work work) {
@@ -19,15 +20,10 @@ public class RuleSet extends Rule {
 
 	@Override
 	public boolean validate() throws RuleDeclinedException {
-		boolean valid = true;
-
 		for(Rule rule: _rules) {
-			if(!rule.validate()) {
-
-				valid = false;
-				break;
-			}
+			rule.validate();
 		}
-		return valid;
+
+		return true;
 	}
 }

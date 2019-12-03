@@ -1,6 +1,12 @@
 package m19.app.requests;
 
 import m19.LibraryManager;
+import m19.app.exceptions.NoSuchUserException;
+import m19.app.exceptions.NoSuchWorkException;
+import m19.app.exceptions.RuleFailedException;
+import m19.exceptions.GetUserFailedException;
+import m19.exceptions.GetWorkFailedException;
+import m19.exceptions.RuleDeclinedException;
 import pt.tecnico.po.ui.Command;
 import pt.tecnico.po.ui.DialogException;
 import pt.tecnico.po.ui.Input;
@@ -27,8 +33,21 @@ public class DoRequestWork extends Command<LibraryManager> {
 	public final void execute() throws DialogException {
 		try {
 			_form.parse();
+			int i = _receiver.requestWork(_userId.value(), _workId.value());
+			_display.popup(Message.workReturnDay(_workId.value(), i));
 		}
-		catch()
+		catch(RuleDeclinedException ex) {
+			if(ex.getFailedRuledId() == 3) {
+				// do something else
+			}
+			throw new RuleFailedException(_userId.value(), _workId.value(), ex.getFailedRuledId());
+		}
+		catch(GetUserFailedException ex) {
+			throw new NoSuchUserException(_userId.value());
+		}
+		catch(GetWorkFailedException ex) {
+			throw new NoSuchWorkException(_workId.value());
+		}
 	}
 
 }

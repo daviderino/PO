@@ -13,8 +13,6 @@ public abstract class Work implements Serializable {
     private int _price;
     private int _availableCopies;
     private Category _category;
-    private HashMap<String, Integer> _requestDays;
-    //private int[] _requestDays; // [normal, complaint, noncompliant]
 
     public Work(int id, String title, int price, Category category, int count) {
         _id = id;
@@ -23,25 +21,6 @@ public abstract class Work implements Serializable {
         _title = title;
         _price = price;
         _category = category;
-
-        _requestDays = new HashMap<String, Integer>();
-
-        // this is bad
-        if(count == 1) {
-            _requestDays.put("NORMAL", 3);
-            _requestDays.put("CUMPRIDOR", 8);
-            _requestDays.put("FALTOSO", 2);
-        }
-        else if(count > 1 && count <= 5) {
-            _requestDays.put("NORMAL", 8);
-            _requestDays.put("CUMPRIDOR", 15);
-            _requestDays.put("FALTOSO", 2);
-        }
-        else {
-            _requestDays.put("NORMAL", 15);
-            _requestDays.put("CUMPRIDOR", 30);
-            _requestDays.put("FALTOSO", 2);
-        }
     }
 
     public String getTitle() {
@@ -68,6 +47,10 @@ public abstract class Work implements Serializable {
         return _category;
     }
 
+    public boolean isRequestable() {
+        return _category.getIsRequestable();
+    }
+
     public String category() {
         return _category.getName();
     }
@@ -85,7 +68,15 @@ public abstract class Work implements Serializable {
     }
 
     public int computeReturnDate(User user) {
-        return _requestDays.get(user.getBehaviour());
+        if(_count == 1) {
+            return user.getRequestDay(0);
+        }
+        else if(_count > 1 && _count < 5) {
+            return user.getRequestDay(1);
+        }
+        else {
+            return user.getRequestDay(2);
+        }
     }
 
     @Override

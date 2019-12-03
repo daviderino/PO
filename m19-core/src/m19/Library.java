@@ -22,6 +22,8 @@ public class Library implements Serializable {
 
 	private Map<Integer, User> _users = new HashMap<Integer, User>();
 	private Map<Integer, Work> _works = new TreeMap<Integer, Work>();
+	private List<Request> _requests = new ArrayList<Request>();
+
 	
 	/**
 	 * Gets value of the date
@@ -246,7 +248,7 @@ public class Library implements Serializable {
 	 * @param workId work that is being requested
 	 * @throws RuleDeclinedException if a rule fails
 	 */
-	public void requestWork(int userId, int workId) throws RuleDeclinedException {
+	public int requestWork(int userId, int workId) throws RuleDeclinedException, GetUserFailedException, GetWorkFailedException {
 		User user = _users.get(userId);
 		Work work = _works.get(workId);
 
@@ -258,14 +260,17 @@ public class Library implements Serializable {
 		rules.addRule(new RuleNoCopiesAvailable(user, work));
 		rules.addRule(new RuleUserNotSuspended(user, work));
 
-		if(user != null && work != null) {
-			if(rules.validate()) {
-				int returnDate = work.computeReturnDate(user);
-				Request request = new Request(user, work, returnDate);
-			}
-			else {
-				throw new RuleDeclinedException(false);
-			}
+		if(user == null) {
+			throw new GetUserFailedException();
 		}
+
+		if(work == null) {
+			throw new GetWorkFailedException();
+		}
+
+		rules.validate();
+		int returnDate = work.computeReturnDate(user);
+		_requests.add(new Request(user, work, returnDate));
+		return returnDate;
 	}
 }

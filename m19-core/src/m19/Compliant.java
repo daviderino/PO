@@ -7,7 +7,7 @@ public class Compliant extends Behaviour implements Serializable {
 	 * @param user
 	 */
 	public Compliant(User user) {
-		super(user, 5, 5, 0);
+		super(user, 5, 5, 0, true, new int[] {8, 15, 30});
 	}
 
 	@Override

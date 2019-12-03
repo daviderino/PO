@@ -129,6 +129,17 @@ public class User implements Serializable, Comparable<User> {
 	}
 
 	/**
+	 * @return if the user can request expensive works
+	 */
+	public boolean canRequestExpensiveWorks() {
+		return _behaviour.getCanRequestExpensiveWorks();
+	}
+
+	public int getRequestDay(int i) {
+		return _behaviour.getRequestDay(i);
+	}
+
+	/**
 	 * Call state method
 	 */
 	public void behavedPoorly() {

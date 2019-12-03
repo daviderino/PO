@@ -7,7 +7,7 @@ public class NonCompliant extends Behaviour implements Serializable {
 	 * @param user
 	 */
 	public NonCompliant(User user) {
-		super(user, 1, 0, 3);
+		super(user, 1, 0, 3, false, new int[] {2, 2, 2});
 	}
 
 	@Override
