@@ -12,7 +12,6 @@ public class Request implements Serializable {
 		_user = user;
 		_work = work;
 		_returnDate = returnDate;
-		_onTime = true;
 	}
 
 	public int getUserId() {
@@ -25,13 +24,5 @@ public class Request implements Serializable {
 
 	public int getReturnDate() {
 		return _returnDate;
-	}
-
-	public boolean getOnTime() {
-		return _onTime;
-	}
-
-	public void setOnTime(boolean onTime) {
-		_onTime = onTime;
 	}
 }

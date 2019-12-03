@@ -35,13 +35,18 @@ public class DoReturnWork extends Command<LibraryManager> {
 	public final void execute() throws DialogException {
 		try {
 			_form.parse();
-			boolean b = _receiver.returnWork(_userId.value(), _workId.value());
+			int fine = _receiver.returnWork(_userId.value(), _workId.value());
 
-			if(!b) {
+			if(fine != 0) {
+				_display.popup(Message.showFine(_userId.value(), fine));
 				_form.clear();
 				Input<Boolean> pay = _form.addBooleanInput(Message.requestFinePaymentChoice());
 				_form.parse();
 				_form.clear();
+
+				_userId = _form.addIntegerInput(Message.requestUserId());
+				_workId = _form.addIntegerInput(Message.requestWorkId());
+
 				if(pay.value()) {
 					_receiver.payFine(_userId.value());
 				}

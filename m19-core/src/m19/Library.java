@@ -284,23 +284,26 @@ public class Library implements Serializable {
 	 * @throws GetUserFailedException
 	 * @throws RequestNonExistentException
 	 */
-	public boolean returnWork(int userId, int workId) throws GetWorkFailedException, GetUserFailedException, RequestNonExistentException {
+	public int returnWork(int userId, int workId) throws GetWorkFailedException, GetUserFailedException, RequestNonExistentException {
 		User user = getUser(userId);
 		getWork(workId);
 
 		for(Request request: user.getRequests()) {
 			if(request.getUserId() == userId && request.getWorkId() == workId) {
+				user.removeRequest(request);
+
+				int fine = user.getTotalFines();
+
 				if(request.getReturnDate() < _date) {
+					fine += 5 * (_date - request.getReturnDate());
 					user.setIsActive(false);
-					user.addFine(5);
+					user.addFine(fine);
 					user.behavedPoorly();
 				}
 				else {
 					user.behavedProperly();
 				}
-
-				user.removeRequest(request);
-				return request.getOnTime();
+				return fine;
 			}
 		}
 		throw new RequestNonExistentException();

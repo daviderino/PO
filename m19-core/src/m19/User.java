@@ -175,10 +175,8 @@ public class User implements Serializable, Comparable<User> {
 	 */
 	public void payFine() throws ActiveUserException {
 		if(!_isActive && _totalFines >= 5) {
-			_totalFines -= 5;
-			if(_totalFines == 0) {
-				_isActive = true;
-			}
+			_totalFines = 0;
+			_isActive = true;
 		}
 		else {
 			throw new ActiveUserException();

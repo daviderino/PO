@@ -26,11 +26,4 @@ public class Book extends Work implements Serializable {
     public String getType(){
         return "Livro";
     }
-    
-    @Override
-    public String toString(){
-        return getId() +  " - " + getAvailableCopies() + " de " + getCount() + " - " + getType() + " - " +
-            getTitle() + " - " + getPrice() + " - " + getCategory() + " - " + 
-            _author + " - " + String.valueOf(_ISBN);
-    }
 } 

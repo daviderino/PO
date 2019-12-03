@@ -187,7 +187,7 @@ public class LibraryManager {
     	return _library.requestWork(userId, workId);
     }
 
-    public boolean returnWork(int userId, int workId) throws RequestNonExistentException, GetWorkFailedException, GetUserFailedException {
+    public int returnWork(int userId, int workId) throws RequestNonExistentException, GetWorkFailedException, GetUserFailedException {
     	return _library.returnWork(userId, workId);
     }
 }
