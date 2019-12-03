@@ -15,14 +15,13 @@ import java.util.regex.Pattern;
  */
 public class Library implements Serializable {
 	private static final long serialVersionUID = 201901101348L;
+	private int _date = 0;
 	private int _userId = 0;
 	private int _workId = 0;
-	private int _date = 0;
 	private boolean _libChanged = true; // variable which controls whether the library has been changed or not
 
 	private Map<Integer, User> _users = new HashMap<Integer, User>();
 	private Map<Integer, Work> _works = new TreeMap<Integer, Work>();
-
 	
 	/**
 	 * Gets value of the date
@@ -238,6 +237,10 @@ public class Library implements Serializable {
 		List<Work> foundWorks = new ArrayList<Work>();
 		SearchByTitle searchByTitle = new SearchByTitle();
 		SearchByCreator searchByCreator = new SearchByCreator();
+
+		if(term == null || term.isEmpty()) {
+			return foundWorks;
+		}
 
 		for(Work work: _works.values()) {
 			if(searchByTitle.explore(work, term) || searchByCreator.explore(work, term)) {
