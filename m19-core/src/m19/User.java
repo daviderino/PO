@@ -16,7 +16,7 @@ public class User implements Serializable, Comparable<User> {
 	private String _name;
 	private String _email;
 	private Behaviour _behaviour;
-	private List<Request> _requests;
+	private List<Request> _requests = new ArrayList<Request>();
 
 	/**
 	 *
@@ -74,6 +74,20 @@ public class User implements Serializable, Comparable<User> {
 	 */
 	public List<Request> getRequests() {
 		return _requests;
+	}
+
+	/**
+	 * @param request to add
+	 */
+	public void addRequest(Request request) {
+		_requests.add(request);
+	}
+
+	/**
+	 * @param request to remove
+	 */
+	public void removeRequest(Request request) {
+		_requests.remove(request);
 	}
 
 	/**
@@ -150,6 +164,9 @@ public class User implements Serializable, Comparable<User> {
 	 * @param fine to add
 	 */
 	public void addFine(int fine) {
+		if(_isActive) {
+			_isActive = false;
+		}
 		_totalFines += fine;
 	}
 
@@ -159,6 +176,9 @@ public class User implements Serializable, Comparable<User> {
 	public void payFine() throws ActiveUserException {
 		if(!_isActive && _totalFines >= 5) {
 			_totalFines -= 5;
+			if(_totalFines == 0) {
+				_isActive = true;
+			}
 		}
 		else {
 			throw new ActiveUserException();

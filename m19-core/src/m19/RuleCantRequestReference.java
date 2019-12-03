@@ -10,9 +10,8 @@ public class RuleCantRequestReference extends Rule implements Serializable {
 	}
 
 	@Override
-	public boolean validate() throws RuleDeclinedException {
+	public void validate() throws RuleDeclinedException {
 		if(getWork().isRequestable()) {
-			return true;
 		}
 		else {
 			throw new RuleDeclinedException(5);

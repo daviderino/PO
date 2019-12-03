@@ -10,9 +10,8 @@ public class RuleCantHaveNRequests extends Rule implements Serializable {
 	}
 
 	@Override
-	public boolean validate() throws RuleDeclinedException {
+	public void validate() throws RuleDeclinedException {
 		if(getUser().getRequests().size() < getUser().getMaxRequests()) {
-			return true;
 		}
 		else {
 			throw new RuleDeclinedException(4);

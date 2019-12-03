@@ -33,8 +33,8 @@ public class DoRequestWork extends Command<LibraryManager> {
 	public final void execute() throws DialogException {
 		try {
 			_form.parse();
-			int i = _receiver.requestWork(_userId.value(), _workId.value());
-			_display.popup(Message.workReturnDay(_workId.value(), i));
+			int returnDay = _receiver.requestWork(_userId.value(), _workId.value());
+			_display.popup(Message.workReturnDay(_workId.value(), returnDay));
 		}
 		catch(RuleDeclinedException ex) {
 			if(ex.getFailedRuledId() == 3) {

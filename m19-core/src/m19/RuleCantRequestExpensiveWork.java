@@ -10,9 +10,8 @@ public class RuleCantRequestExpensiveWork extends Rule implements Serializable {
 	}
 
 	@Override
-	public boolean validate() throws RuleDeclinedException {
+	public void validate() throws RuleDeclinedException {
 		if(getWork().getPrice() <= 25 || (getUser().canRequestExpensiveWorks())) {
-			return true;
 		}
 		else {
 			throw new RuleDeclinedException(6);

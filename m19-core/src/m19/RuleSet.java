@@ -19,11 +19,10 @@ public class RuleSet extends Rule implements Serializable {
 	}
 
 	@Override
-	public boolean validate() throws RuleDeclinedException {
+	public void validate() throws RuleDeclinedException {
 		for(Rule rule: _rules) {
 			rule.validate();
 		}
 
-		return true;
 	}
 }

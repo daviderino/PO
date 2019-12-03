@@ -179,7 +179,15 @@ public class LibraryManager {
 		_library.payFine(userId);
     }
 
+	public List<Work> searchWorks(String term){
+		return _library.searchWorks(term);
+	}
+
     public int requestWork(int userId, int workId) throws RuleDeclinedException, GetUserFailedException, GetWorkFailedException {
     	return _library.requestWork(userId, workId);
+    }
+
+    public boolean returnWork(int userId, int workId) throws RequestNonExistentException, GetWorkFailedException, GetUserFailedException {
+    	return _library.returnWork(userId, workId);
     }
 }

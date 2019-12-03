@@ -21,5 +21,5 @@ public abstract class Rule implements Serializable {
 		return _work;
 	}
 
-	public abstract boolean validate() throws RuleDeclinedException;
+	public abstract void validate() throws RuleDeclinedException;
 }

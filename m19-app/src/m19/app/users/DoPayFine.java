@@ -27,11 +27,11 @@ public class DoPayFine extends Command<LibraryManager> {
 	/** @see pt.tecnico.po.ui.Command#execute() */
 	@Override
 	public final void execute() throws DialogException {
-		_form.parse();
-
 		try {
+			_form.parse();
 			_receiver.payFine(_id.value());
-		} catch (ActiveUserException e) {
+		}
+		catch (ActiveUserException e) {
 			throw new UserIsActiveException(_id.value());
 		}
 		catch (GetUserFailedException e) {

@@ -10,12 +10,11 @@ public class RuleCantRequestTwice extends Rule implements Serializable {
 	}
 
 	@Override
-	public boolean validate() throws RuleDeclinedException {
+	public void validate() throws RuleDeclinedException {
 		for(Request request: getUser().getRequests()) {
-			if(request.getWork() == getWork()) {
+			if(request.getWorkId() == getWork().getId()) {
 				throw new RuleDeclinedException(1);
 			}
 		}
-		return true;
 	}
 }

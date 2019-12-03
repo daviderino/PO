@@ -22,7 +22,6 @@ public class Library implements Serializable {
 
 	private Map<Integer, User> _users = new HashMap<Integer, User>();
 	private Map<Integer, Work> _works = new TreeMap<Integer, Work>();
-	private List<Request> _requests = new ArrayList<Request>();
 
 	
 	/**
@@ -147,17 +146,6 @@ public class Library implements Serializable {
 	public void advanceDate(int n){
 		if(n > 0) {
 			_date = _date + n;
-
-			for(User user: _users.values()) {
-				for(Request request: user.getRequests()) {
-					if(request.getOnTime() && request.getReturnDate() < _date) {
-						request.setOnTime(false);
-						user.setIsActive(false);
-						user.addFine(5);
-						user.behavedPoorly();
-					}
-				}
-			}
 			_libChanged = true;
 		}
 	}
@@ -236,9 +224,28 @@ public class Library implements Serializable {
 	 * @param userId of the user to pay the fine of
 	 * @throws ActiveUserException if user has no fines to pay or is not suspended
 	 */
-	public void payFine(int userId) throws ActiveUserException {
-		_users.get(userId).payFine();
+	public void payFine(int userId) throws ActiveUserException, GetUserFailedException {
+		getUser(userId).payFine();
 		_libChanged = true;
+	}
+
+
+	/**
+	 * @param term to search
+	 * @return
+	 */
+	public List<Work> searchWorks(String term){
+		List<Work> foundWorks = new ArrayList<Work>();
+		SearchByTitle searchByTitle = new SearchByTitle();
+		SearchByCreator searchByCreator = new SearchByCreator();
+
+		for(Work work: _works.values()) {
+			if(searchByTitle.explore(work, term) || searchByCreator.explore(work, term)) {
+				foundWorks.add(work);
+			}
+		}
+
+		return foundWorks;
 	}
 
 	/**
@@ -249,8 +256,8 @@ public class Library implements Serializable {
 	 * @throws RuleDeclinedException if a rule fails
 	 */
 	public int requestWork(int userId, int workId) throws RuleDeclinedException, GetUserFailedException, GetWorkFailedException {
-		User user = _users.get(userId);
-		Work work = _works.get(workId);
+		User user = getUser(userId);
+		Work work = getWork(workId);
 
 		RuleSet rules = new RuleSet(user, work);
 		rules.addRule(new RuleCantHaveNRequests(user, work));
@@ -260,17 +267,39 @@ public class Library implements Serializable {
 		rules.addRule(new RuleNoCopiesAvailable(user, work));
 		rules.addRule(new RuleUserNotSuspended(user, work));
 
-		if(user == null) {
-			throw new GetUserFailedException();
-		}
-
-		if(work == null) {
-			throw new GetWorkFailedException();
-		}
-
 		rules.validate();
 		int returnDate = work.computeReturnDate(user);
-		_requests.add(new Request(user, work, returnDate));
+		user.addRequest(new Request(user, work, returnDate));
 		return returnDate;
+	}
+
+	/**
+	 * @param userId of the user
+	 * @param workId of the work
+	 * @return true if the request has no fine associated with it (is on time). False otherwise
+	 * @throws GetWorkFailedException
+	 * @throws GetUserFailedException
+	 * @throws RequestNonExistentException
+	 */
+	public boolean returnWork(int userId, int workId) throws GetWorkFailedException, GetUserFailedException, RequestNonExistentException {
+		User user = getUser(userId);
+		getWork(workId);
+
+		for(Request request: user.getRequests()) {
+			if(request.getUserId() == userId && request.getWorkId() == workId) {
+				if(request.getReturnDate() < _date) {
+					user.setIsActive(false);
+					user.addFine(5);
+					user.behavedPoorly();
+				}
+				else {
+					user.behavedProperly();
+				}
+
+				user.removeRequest(request);
+				return request.getOnTime();
+			}
+		}
+		throw new RequestNonExistentException();
 	}
 }
