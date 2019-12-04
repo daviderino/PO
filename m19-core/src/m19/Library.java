@@ -284,7 +284,7 @@ public class Library implements Serializable {
 		rules.addRule(new RuleUserNotSuspended(user, work));
 
 		rules.validate();
-		int returnDate = work.computeReturnDate(user);
+		int returnDate = work.computeReturnDate(user) + _date;
 		user.addRequest(new Request(user, work, returnDate));
 		work.decrementCount();
 		work.notifyRequestObservers();

@@ -14,7 +14,7 @@ public class NonCompliant extends Behaviour implements Serializable {
 	public void behavedProperly() {
 		incrementGoodStreak();
 		if(getGoodStreak() == 3) {
-			getUser().setBehaviour(new Normal(getUser(), 3, 0));
+			getUser().setBehaviour(new Normal(getUser(), 0, 0));
 		}
 	}
 

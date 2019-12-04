@@ -71,7 +71,7 @@ public abstract class Work extends Subject implements Serializable {
         if(_count == 1) {
             return user.getRequestDay(0);
         }
-        else if(_count > 1 && _count < 5) {
+        else if(_count > 1 && _count <= 5) {
             return user.getRequestDay(1);
         }
         else {
