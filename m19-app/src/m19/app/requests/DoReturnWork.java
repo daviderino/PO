@@ -44,12 +44,12 @@ public class DoReturnWork extends Command<LibraryManager> {
 				_form.parse();
 				_form.clear();
 
-				_userId = _form.addIntegerInput(Message.requestUserId());
-				_workId = _form.addIntegerInput(Message.requestWorkId());
-
 				if(pay.value()) {
 					_receiver.payFine(_userId.value());
 				}
+
+				_userId = _form.addIntegerInput(Message.requestUserId());
+				_workId = _form.addIntegerInput(Message.requestWorkId());
 			}
 		}
 		catch (GetWorkFailedException e) {
