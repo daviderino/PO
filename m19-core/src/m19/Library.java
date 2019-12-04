@@ -145,6 +145,15 @@ public class Library implements Serializable {
 	public void advanceDate(int n){
 		if(n > 0) {
 			_date = _date + n;
+
+			for(User user: _users.values()) {
+				for(Request request: user.getRequests()) {
+					if(request.getOnTime() && request.getReturnDate() < _date) {
+						request.setOnTime(false);
+					}
+				}
+			}
+
 			_libChanged = true;
 		}
 	}

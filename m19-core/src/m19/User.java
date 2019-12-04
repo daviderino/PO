@@ -177,7 +177,17 @@ public class User implements Serializable, Comparable<User>, Observer {
 	public void payFine() throws ActiveUserException {
 		if(!_isActive && _totalFines >= 5) {
 			_totalFines = 0;
-			_isActive = true;
+			boolean onTime = true;
+
+			for(Request request: _requests) {
+				if(!request.getOnTime()) {
+					onTime = false;
+					break;
+				}
+			}
+			if(onTime) {
+				_isActive = true;
+			}
 		}
 		else {
 			throw new ActiveUserException();
