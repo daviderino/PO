@@ -1,5 +1,6 @@
 package m19;
 
+
 public class ObserverReturn extends Observer{
 
     public ObserverReturn(Work work, User user){

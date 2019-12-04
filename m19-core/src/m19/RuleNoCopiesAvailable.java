@@ -11,9 +11,7 @@ public class RuleNoCopiesAvailable extends Rule implements Serializable {
 
 	@Override
 	public void validate() throws RuleDeclinedException {
-		if(getWork().getAvailableCopies() > 0) {
-		}
-		else {
+		if(getWork().getAvailableCopies() == 0) {
 			throw new RuleDeclinedException(3);
 		}
 	}

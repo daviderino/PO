@@ -17,7 +17,8 @@ public class User implements Serializable, Comparable<User> {
 	private String _email;
 	private Behaviour _behaviour;
 	private List<Request> _requests = new ArrayList<Request>();
-	private List<Notification> _notifications;
+	private List<Notification> _notifications = new ArrayList<Notification>();
+
 
 	/**
 	 *
@@ -32,7 +33,6 @@ public class User implements Serializable, Comparable<User> {
 		_totalFines = 0;
 		_isActive = true;
 		_behaviour = new Normal(this, 0, 0);
-		_requests = new ArrayList<Request>();
 	}
 
 	/**
@@ -168,7 +168,7 @@ public class User implements Serializable, Comparable<User> {
 		if(_isActive) {
 			_isActive = false;
 		}
-		_totalFines += fine;
+		_totalFines = fine;
 	}
 
 	/**
@@ -184,16 +184,15 @@ public class User implements Serializable, Comparable<User> {
 		}
 	}
 
-	public void addNotification(Work work, String type){
-		_notifications.add(new Notification(work, type));
-	}
-
 	public List<Notification> showNotifications(){
 		List<Notification> copy = new ArrayList<Notification>();
 		copy.addAll(_notifications);
 		_notifications.clear();
 		return copy;
+	}
 
+	public void addNotification(Work work, String type) {
+		_notifications.add(new Notification(work, type));
 	}
 
 	/**
@@ -218,5 +217,4 @@ public class User implements Serializable, Comparable<User> {
 	public String toString() {
 		return getId() + " - " + getName() + " - " + getEmail() + " - " + behaviour() + " - " + isActive();
 	}
-
 }

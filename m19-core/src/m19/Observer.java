@@ -1,5 +1,6 @@
 package m19;
 
+
 import java.io.Serializable;
 
 public abstract class Observer implements Serializable{
@@ -20,5 +21,5 @@ public abstract class Observer implements Serializable{
         return _work;
     }
 
-    public void update(){ }
+    public abstract void update();
 }
