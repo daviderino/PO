@@ -42,12 +42,12 @@ public class DoRequestWork extends Command<LibraryManager> {
 				Input<Boolean> notify = _form.addBooleanInput(Message.requestReturnNotificationPreference());
 				_form.parse();
 				_form.clear();
-				_userId = _form.addIntegerInput(Message.requestUserId());
-				_workId = _form.addIntegerInput(Message.requestWorkId());
 
 				if(notify.value()) {
 					_receiver.addReturnObserver(_userId.value(), _workId.value());
 				}
+				_userId = _form.addIntegerInput(Message.requestUserId());
+				_workId = _form.addIntegerInput(Message.requestWorkId());
 			}
 			else {
 				throw new RuleFailedException(_userId.value(), _workId.value(), ex.getFailedRuledId());
