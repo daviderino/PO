@@ -43,10 +43,6 @@ public abstract class Work extends Subject implements Serializable {
         return _id;
     }
 
-    public Category getCategory(){
-        return _category;
-    }
-
     public boolean isRequestable() {
         return _category.getIsRequestable();
     }

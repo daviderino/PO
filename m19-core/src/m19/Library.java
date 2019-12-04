@@ -316,12 +316,12 @@ public class Library implements Serializable {
 			if(request.getUserId() == userId && request.getWorkId() == workId) {
 				user.removeRequest(request);
 
-				int fine = 0;
+				int fine = user.getTotalFines();
 
 				if(request.getReturnDate() < _date) {
-					fine = 5 * (_date - request.getReturnDate());
+					fine += 5 * (_date - request.getReturnDate());
 					user.setIsActive(false);
-					user.addFine(fine);
+					user.setFine(fine);
 					user.behavedPoorly();
 				}
 				else {

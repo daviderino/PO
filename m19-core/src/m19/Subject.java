@@ -1,9 +1,10 @@
 package m19;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Subject {
+public abstract class Subject implements Serializable {
 	private List<Observer> _requestObservers = new ArrayList<Observer>();
 	private List<Observer> _returnObservers = new ArrayList<Observer>();
 	
@@ -24,6 +25,5 @@ public abstract class Subject {
     }
 
 	public abstract void notifyRequestObservers();
-	
     public abstract void notifyReturnObservers();
 }

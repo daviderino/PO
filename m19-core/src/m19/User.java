@@ -164,11 +164,11 @@ public class User implements Serializable, Comparable<User>, Observer {
 	/**
 	 * @param fine to add
 	 */
-	public void addFine(int fine) {
+	public void setFine(int fine) {
 		if(_isActive) {
 			_isActive = false;
 		}
-		_totalFines += fine;
+		_totalFines = fine;
 	}
 
 	/**
