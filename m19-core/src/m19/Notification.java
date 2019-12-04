@@ -2,7 +2,7 @@ package m19;
 
 import java.io.Serializable;
 
-public class Notification implements Serializable{
+public class Notification implements Serializable {
     private Work _work;
     private String _type;
 

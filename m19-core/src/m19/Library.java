@@ -22,7 +22,7 @@ public class Library implements Serializable {
 
 	private Map<Integer, User> _users = new HashMap<Integer, User>();
 	private Map<Integer, Work> _works = new TreeMap<Integer, Work>();
-	
+
 	/**
 	 * Gets value of the date
 	 *
@@ -30,7 +30,7 @@ public class Library implements Serializable {
 	 */
 	public int getDate() {
 		return _date;
-    }
+	}
 
 	/**
 	 * @param changed state of the library to change to
@@ -44,7 +44,7 @@ public class Library implements Serializable {
 	 */
 	public boolean getLibChanged() {
 		return _libChanged;
-    }
+	}
 
 	/**
 	 * Registers a work from the given fields in the Map
@@ -98,7 +98,7 @@ public class Library implements Serializable {
 
 	/**
 	 * Registers a user or a work from the given fields, depending on the first field
-	 * 
+	 *
 	 * @param fields of the entity ro register
 	 * @throws BadEntrySpecificationException if the fields can't be assigned to a user or a work
 	 */
@@ -189,7 +189,7 @@ public class Library implements Serializable {
 			throw new GetUserFailedException();
 		}
 		return user;
-    }
+	}
 
 	/**
 	 * Gets a List of the users registered in the library
@@ -197,14 +197,14 @@ public class Library implements Serializable {
 	 * @return a List containing the users
 	 */
 	public List<User> getAllUsers() {
-	    List<User> usersList = new LinkedList<>();
-	    usersList.addAll(_users.values());
+		List<User> usersList = new LinkedList<>();
+		usersList.addAll(_users.values());
 		return usersList;
-    }
+	}
 
 	/**
 	 * Gets a work with a given id
-	 * 
+	 *
 	 * @param id of the work
 	 * @throws GetWorkFailedException if it doesn't find the work
 	 * @return the work
@@ -219,7 +219,7 @@ public class Library implements Serializable {
 
 	/**
 	 * Gets a List of all the works in the library
-	 * 
+	 *
 	 * @return a List of all of the works
 	 */
 	public List<Work> getAllWorks(){
@@ -236,7 +236,7 @@ public class Library implements Serializable {
 		getUser(userId).payFine();
 		_libChanged = true;
 	}
-	
+
 	public void payFine(int userId, int payment) throws ActiveUserException, GetUserFailedException {
 		getUser(userId).payFine(payment);
 		_libChanged = true;
@@ -346,7 +346,7 @@ public class Library implements Serializable {
 	}
 
 	public List<Notification> getUserNotifications(int userId) throws GetUserFailedException{
-		User user = getUser(userId); 
+		User user = getUser(userId);
 		return user.getNotifications();
 	}
 }

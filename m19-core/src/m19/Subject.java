@@ -1,5 +1,6 @@
 package m19;
 
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,5 +26,6 @@ public abstract class Subject implements Serializable {
     }
 
 	public abstract void notifyRequestObservers();
+	
     public abstract void notifyReturnObservers();
 }
