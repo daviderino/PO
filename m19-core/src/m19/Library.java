@@ -274,7 +274,7 @@ public class Library implements Serializable {
 		int returnDate = work.computeReturnDate(user);
 		user.addRequest(new Request(user, work, returnDate));
 		work.decrementCount();
-		//work.notifyObservers("REQUISIÇÃO");
+		work.notifyRequestObservers();
 		_libChanged = true;
 		return returnDate;
 	}
@@ -283,7 +283,7 @@ public class Library implements Serializable {
 		User user = _users.get(userId);
 		Work work = _works.get(workId);
 
-		work.attachObserver(new ObserverReturn(work, user));
+		work.registerReturnObserver(user);
 		_libChanged = true;
 	}
 
@@ -315,7 +315,7 @@ public class Library implements Serializable {
 					user.behavedProperly();
 				}
 
-				work.notifyObservers("ENTREGA");
+				work.notifyReturnObservers();
 				work.incrementCount();
 				_libChanged = true;
 				return fine;
@@ -328,7 +328,12 @@ public class Library implements Serializable {
 		User user = _users.get(userId);
 		Work work = _works.get(workId);
 
-		work.attachObserver(new ObserverRequest(work, user));
+		work.registerRequestObserver(user);
 		_libChanged = true;
+	}
+
+	public List<Notification> getUserNotifications(int userId) throws GetUserFailedException{
+		User user = getUser(userId); 
+		return user.getNotifications();
 	}
 }

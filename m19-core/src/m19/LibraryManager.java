@@ -198,4 +198,8 @@ public class LibraryManager {
 	public void addRequestObserver(int userId, int workId) {
 		_library.addRequestObserver(userId, workId);
 	}
+
+	public List<Notification> getUserNotifications(int userId) throws GetUserFailedException{
+		return _library.getUserNotifications(userId);
+	} 
 }

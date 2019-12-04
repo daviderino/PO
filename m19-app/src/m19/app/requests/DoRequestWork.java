@@ -1,6 +1,5 @@
 package m19.app.requests;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import m19.LibraryManager;
 import m19.app.exceptions.NoSuchUserException;
 import m19.app.exceptions.NoSuchWorkException;

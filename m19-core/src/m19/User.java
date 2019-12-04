@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Class that represents the concept of user
  */
-public class User implements Serializable, Comparable<User> {
+public class User implements Serializable, Comparable<User>, Observer {
 	private int _id;
 	private int _totalFines;
 	private boolean _isActive;
@@ -184,15 +184,15 @@ public class User implements Serializable, Comparable<User> {
 		}
 	}
 
-	public List<Notification> showNotifications(){
+	public void update(Work work, String type){
+		_notifications.add(new Notification(work, type));
+	}
+
+	public List<Notification> getNotifications(){
 		List<Notification> copy = new ArrayList<Notification>();
 		copy.addAll(_notifications);
 		_notifications.clear();
 		return copy;
-	}
-
-	public void addNotification(Work work, String type) {
-		_notifications.add(new Notification(work, type));
 	}
 
 	/**
@@ -215,6 +215,10 @@ public class User implements Serializable, Comparable<User> {
 
 	@Override
 	public String toString() {
-		return getId() + " - " + getName() + " - " + getEmail() + " - " + behaviour() + " - " + isActive();
+		String userString = getId() + " - " + getName() + " - " + getEmail() + " - " + behaviour() + " - " + isActive();
+		for(Notification n: _notifications){
+			userString += ('\n' + n.toString());
+		}
+		return userString;
 	}
 }
