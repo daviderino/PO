@@ -17,3 +17,5 @@ m19-app/src/m19/app/users/CVS/
 m19-app/src/m19/app/works/CVS/
 m19-core/src/m19/CVS/Entries
 m19-core/src/m19/exceptions/CVS/
+po-uuilib
+*.sh

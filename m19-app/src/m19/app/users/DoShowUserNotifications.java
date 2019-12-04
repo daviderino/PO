@@ -35,6 +35,7 @@ public class DoShowUserNotifications extends Command<LibraryManager> {
 		_form.parse();
 		try{
 			List<Notification> notifications = _receiver.getUserNotifications(_id.value());
+
 			for(Notification notification: notifications) {
 				_display.addLine(notification.toString());
 			}
