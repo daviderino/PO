@@ -19,6 +19,7 @@ public class User implements Serializable, Comparable<User> {
 	private List<Request> _requests = new ArrayList<Request>();
 	private List<Notification> _notifications = new ArrayList<Notification>();
 
+
 	/**
 	 *
 	 * @param id of the user being created
@@ -193,7 +194,6 @@ public class User implements Serializable, Comparable<User> {
 	public void addNotification(Work work, String type) {
 		_notifications.add(new Notification(work, type));
 	}
-
 
 	/**
 	 * Compares 2 users by name ignoring upper/lower case. Compares by ids if names are equal

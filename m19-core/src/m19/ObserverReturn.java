@@ -1,16 +1,14 @@
 package m19;
 
-public class ObserverReturn implements Observer {
-	private Work _work;
-	private User _user;
 
-	public ObserverReturn(Work work, User user){
-		_work = work;
-		_user = user;
-	}
+public class ObserverReturn extends Observer{
 
-	@Override
-	public void update() {
-		_user.addNotification(_work, "ENTREGA");
-	}
+    public ObserverReturn(Work work, User user){
+        super(work, user);
+    }
+
+    @Override
+    public void update(){
+        getUser().addNotification(getWork(), "ENTREGA");
+    }
 }

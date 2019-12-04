@@ -11,6 +11,7 @@ public abstract class Work extends Subject implements Serializable {
     private int _price;
     private int _availableCopies;
     private Category _category;
+    private List<Observer> _observers = new ArrayList<Observer>();
 
     public Work(int id, String title, int price, Category category, int count) {
         _id = id;
@@ -74,6 +75,16 @@ public abstract class Work extends Subject implements Serializable {
         }
         else {
             return user.getRequestDay(2);
+        }
+    }
+
+    public void registerObserver(Observer o) { 
+        _observers.add(o); 
+    }
+
+    public void notifyObservers() {
+        for (Observer observer: _observers) {
+            observer.update();
         }
     }
 
