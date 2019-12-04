@@ -273,7 +273,18 @@ public class Library implements Serializable {
 		rules.validate();
 		int returnDate = work.computeReturnDate(user);
 		user.addRequest(new Request(user, work, returnDate));
+		work.decrementCount();
+		//work.notifyObservers("REQUISIÇÃO");
+		_libChanged = true;
 		return returnDate;
+	}
+
+	public void addReturnObserver(int userId, int workId) {
+		User user = _users.get(userId);
+		Work work = _works.get(workId);
+
+		work.attachObserver(new ObserverReturn(work, user));
+		_libChanged = true;
 	}
 
 	/**
@@ -286,7 +297,7 @@ public class Library implements Serializable {
 	 */
 	public int returnWork(int userId, int workId) throws GetWorkFailedException, GetUserFailedException, RequestNonExistentException {
 		User user = getUser(userId);
-		getWork(workId);
+		Work work = getWork(workId);
 
 		for(Request request: user.getRequests()) {
 			if(request.getUserId() == userId && request.getWorkId() == workId) {
@@ -303,9 +314,21 @@ public class Library implements Serializable {
 				else {
 					user.behavedProperly();
 				}
+
+				work.notifyObservers("ENTREGA");
+				work.incrementCount();
+				_libChanged = true;
 				return fine;
 			}
 		}
 		throw new RequestNonExistentException();
+	}
+
+	public void addRequestObserver(int userId, int workId) {
+		User user = _users.get(userId);
+		Work work = _works.get(workId);
+
+		work.attachObserver(new ObserverRequest(work, user));
+		_libChanged = true;
 	}
 }

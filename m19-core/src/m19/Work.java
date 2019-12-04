@@ -1,10 +1,8 @@
 package m19;
 
 import java.io.Serializable;
-import java.util.HashMap;
 
-public abstract class Work implements Serializable {
-
+public abstract class Work extends Subject implements Serializable {
     private static final long serialVersionUID = 201901101348L;
 
     private int _id;
@@ -80,9 +78,16 @@ public abstract class Work implements Serializable {
     }
 
     @Override
+    public void notifyObservers(String type) {
+        for(Observer observer: getObservers()) {
+            observer.update();
+        }
+    }
+
+    @Override
     public String toString() {
         return getId() +  " - " + getAvailableCopies() + " de " + getCount() + " - " + getType() + " - " +
-                getTitle() + " - " + getPrice() + " - " + category() + " - " +
-                getCreator() + " - " + getFormalIdentifier();
+             getTitle() + " - " + getPrice() + " - " + category() + " - " +
+             getCreator() + " - " + getFormalIdentifier();
     }
 }

@@ -11,9 +11,7 @@ public class RuleUserNotSuspended extends Rule implements Serializable {
 
 	@Override
 	public void validate() throws RuleDeclinedException {
-		if(getUser().getIsActive()) {
-		}
-		else {
+		if(!getUser().getIsActive()) {
 			throw new RuleDeclinedException(2);
 		}
 	}

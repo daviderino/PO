@@ -11,9 +11,7 @@ public class RuleCantRequestReference extends Rule implements Serializable {
 
 	@Override
 	public void validate() throws RuleDeclinedException {
-		if(getWork().isRequestable()) {
-		}
-		else {
+		if(!getWork().isRequestable()) {
 			throw new RuleDeclinedException(5);
 		}
 	}

@@ -1,5 +1,6 @@
 package m19.app.requests;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import m19.LibraryManager;
 import m19.app.exceptions.NoSuchUserException;
 import m19.app.exceptions.NoSuchWorkException;
@@ -38,9 +39,20 @@ public class DoRequestWork extends Command<LibraryManager> {
 		}
 		catch(RuleDeclinedException ex) {
 			if(ex.getFailedRuledId() == 3) {
-				// do something else
+				_form.clear();
+				Input<Boolean> notify = _form.addBooleanInput(Message.requestReturnNotificationPreference());
+				_form.parse();
+				_form.clear();
+				_userId = _form.addIntegerInput(Message.requestUserId());
+				_workId = _form.addIntegerInput(Message.requestWorkId());
+
+				if(notify.value()) {
+					_receiver.addReturnObserver(_userId.value(), _workId.value());
+				}
 			}
-			throw new RuleFailedException(_userId.value(), _workId.value(), ex.getFailedRuledId());
+			else {
+				throw new RuleFailedException(_userId.value(), _workId.value(), ex.getFailedRuledId());
+			}
 		}
 		catch(GetUserFailedException ex) {
 			throw new NoSuchUserException(_userId.value());

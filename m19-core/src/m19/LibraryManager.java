@@ -190,4 +190,12 @@ public class LibraryManager {
     public int returnWork(int userId, int workId) throws RequestNonExistentException, GetWorkFailedException, GetUserFailedException {
     	return _library.returnWork(userId, workId);
     }
+
+    public void addReturnObserver(int userId, int workId) {
+    	_library.addReturnObserver(userId, workId);
+    }
+
+	public void addRequestObserver(int userId, int workId) {
+		_library.addRequestObserver(userId, workId);
+	}
 }
