@@ -168,15 +168,15 @@ public class User implements Serializable, Comparable<User>, Observer {
 		if(_isActive) {
 			_isActive = false;
 		}
-		_totalFines = fine;
+		_totalFines += fine;
 	}
 
 	/**
 	 * Pays a fine
 	 */
-	public void payFine() throws ActiveUserException {
+	public void payFine(int payment) throws ActiveUserException {
 		if(!_isActive && _totalFines >= 5) {
-			_totalFines = 0;
+			_totalFines -= payment;
 			boolean onTime = true;
 
 			for(Request request: _requests) {
@@ -193,6 +193,20 @@ public class User implements Serializable, Comparable<User>, Observer {
 			throw new ActiveUserException();
 		}
 	}
+
+	/**
+	 * Pays a fine
+	 */
+	public void payFine() throws ActiveUserException {
+		if(!_isActive && _totalFines >= 5) {
+			_totalFines = 0;
+			_isActive = true;
+		}
+		else {
+			throw new ActiveUserException();
+		}
+	}
+
 
 	public void update(Work work, String type){
 		_notifications.add(new Notification(work, type));

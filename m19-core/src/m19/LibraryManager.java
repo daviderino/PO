@@ -175,9 +175,13 @@ public class LibraryManager {
 	 * @throws GetUserFailedException in case the user does not exist
 	 * @throws ActiveUserException in case the user is active
 	 */
-    public void payFine(int userId) throws GetUserFailedException, ActiveUserException {
+	public void payFine(int userId) throws GetUserFailedException, ActiveUserException {
 		_library.payFine(userId);
     }
+
+    public void payFine(int userId, int payment) throws GetUserFailedException, ActiveUserException {
+		_library.payFine(userId, payment);
+	}
 
 	public List<Work> searchWorks(String term){
 		return _library.searchWorks(term);

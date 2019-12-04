@@ -236,7 +236,11 @@ public class Library implements Serializable {
 		getUser(userId).payFine();
 		_libChanged = true;
 	}
-
+	
+	public void payFine(int userId, int payment) throws ActiveUserException, GetUserFailedException {
+		getUser(userId).payFine(payment);
+		_libChanged = true;
+	}
 
 	/**
 	 * @param term to search
@@ -312,10 +316,10 @@ public class Library implements Serializable {
 			if(request.getUserId() == userId && request.getWorkId() == workId) {
 				user.removeRequest(request);
 
-				int fine = user.getTotalFines();
+				int fine = 0;
 
 				if(request.getReturnDate() < _date) {
-					fine += 5 * (_date - request.getReturnDate());
+					fine = 5 * (_date - request.getReturnDate());
 					user.setIsActive(false);
 					user.addFine(fine);
 					user.behavedPoorly();

@@ -44,7 +44,7 @@ public class DoReturnWork extends Command<LibraryManager> {
 				_form.parse();
 
 				if(pay.value()) {
-					_receiver.payFine(_userId.value());
+					_receiver.payFine(_userId.value(), fine);
 				}
 
 				_form.clear();
