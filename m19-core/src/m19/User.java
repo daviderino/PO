@@ -17,6 +17,7 @@ public class User implements Serializable, Comparable<User> {
 	private String _email;
 	private Behaviour _behaviour;
 	private List<Request> _requests = new ArrayList<Request>();
+	private List<Notification> _notifications;
 
 	/**
 	 *
@@ -183,6 +184,18 @@ public class User implements Serializable, Comparable<User> {
 		else {
 			throw new ActiveUserException();
 		}
+	}
+
+	public void addNotification(Work work, String type){
+		_notifications.add(new Notification(work, type));
+	}
+
+	public List<Notification> showNotifications(){
+		List<Notification> copy = new ArrayList<Notification>();
+		copy.addAll(_notifications);
+		_notifications.clear();
+		return copy;
+
 	}
 
 	/**

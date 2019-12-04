@@ -283,7 +283,7 @@ public class Library implements Serializable {
 	 */
 	public boolean returnWork(int userId, int workId) throws GetWorkFailedException, GetUserFailedException, RequestNonExistentException {
 		User user = getUser(userId);
-		getWork(workId);
+		Work work = getWork(workId);
 
 		for(Request request: user.getRequests()) {
 			if(request.getUserId() == userId && request.getWorkId() == workId) {
@@ -295,7 +295,8 @@ public class Library implements Serializable {
 				else {
 					user.behavedProperly();
 				}
-
+				
+				work.notifyObservers();
 				user.removeRequest(request);
 				return request.getOnTime();
 			}
