@@ -42,12 +42,12 @@ public class DoReturnWork extends Command<LibraryManager> {
 				_form.clear();
 				Input<Boolean> pay = _form.addBooleanInput(Message.requestFinePaymentChoice());
 				_form.parse();
-				_form.clear();
 
 				if(pay.value()) {
 					_receiver.payFine(_userId.value());
 				}
 
+				_form.clear();
 				_userId = _form.addIntegerInput(Message.requestUserId());
 				_workId = _form.addIntegerInput(Message.requestWorkId());
 			}

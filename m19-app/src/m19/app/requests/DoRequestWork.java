@@ -41,11 +41,12 @@ public class DoRequestWork extends Command<LibraryManager> {
 				_form.clear();
 				Input<Boolean> notify = _form.addBooleanInput(Message.requestReturnNotificationPreference());
 				_form.parse();
-				_form.clear();
 
 				if(notify.value()) {
 					_receiver.addReturnObserver(_userId.value(), _workId.value());
 				}
+
+				_form.clear();
 				_userId = _form.addIntegerInput(Message.requestUserId());
 				_workId = _form.addIntegerInput(Message.requestWorkId());
 			}
