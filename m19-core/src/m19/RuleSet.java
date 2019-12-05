@@ -9,19 +9,22 @@ import java.util.List;
 public class RuleSet extends Rule implements Serializable {
 	private List<Rule> _rules;
 
-	public RuleSet(User user, Work work) {
-		super(user, work);
+	public RuleSet() {
+		super();
 		_rules = new ArrayList<Rule>();
+		_rules.add(new RuleCantHaveNRequests());
+		_rules.add(new RuleCantRequestExpensiveWork());
+		_rules.add(new RuleCantRequestReference());
+		_rules.add(new RuleCantRequestTwice());
+		_rules.add(new RuleNoCopiesAvailable());
+		_rules.add(new RuleUserNotSuspended());
 	}
 
-	void addRule(Rule rule) {
-		_rules.add(rule);
-	}
 
 	@Override
-	public void validate() throws RuleDeclinedException {
+	public void validate(Work work, User user) throws RuleDeclinedException {
 		for(Rule rule: _rules) {
-			rule.validate();
+			rule.validate(work, user);
 		}
 
 	}

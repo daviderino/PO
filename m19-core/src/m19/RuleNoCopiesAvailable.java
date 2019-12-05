@@ -5,13 +5,10 @@ import m19.exceptions.RuleDeclinedException;
 import java.io.Serializable;
 
 public class RuleNoCopiesAvailable extends Rule implements Serializable {
-	public RuleNoCopiesAvailable(User user, Work work) {
-		super(user, work);
-	}
 
 	@Override
-	public void validate() throws RuleDeclinedException {
-		if(getWork().getAvailableCopies() == 0) {
+	public void validate(Work work, User user) throws RuleDeclinedException {
+		if(work.getAvailableCopies() == 0) {
 			throw new RuleDeclinedException(3);
 		}
 	}

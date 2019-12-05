@@ -22,6 +22,7 @@ public class Library implements Serializable {
 
 	private Map<Integer, User> _users = new HashMap<Integer, User>();
 	private Map<Integer, Work> _works = new TreeMap<Integer, Work>();
+	RuleSet _rules = new RuleSet();
 
 	/**
 	 * Gets value of the date
@@ -275,15 +276,7 @@ public class Library implements Serializable {
 		User user = getUser(userId);
 		Work work = getWork(workId);
 
-		RuleSet rules = new RuleSet(user, work);
-		rules.addRule(new RuleCantHaveNRequests(user, work));
-		rules.addRule(new RuleCantRequestExpensiveWork(user, work));
-		rules.addRule(new RuleCantRequestReference(user, work));
-		rules.addRule(new RuleCantRequestTwice(user, work));
-		rules.addRule(new RuleNoCopiesAvailable(user, work));
-		rules.addRule(new RuleUserNotSuspended(user, work));
-
-		rules.validate();
+		_rules.validate(work, user);
 		int returnDate = work.computeReturnDate(user) + _date;
 		user.addRequest(new Request(user, work, returnDate));
 		work.decrementCount();

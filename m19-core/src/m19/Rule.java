@@ -5,21 +5,6 @@ import m19.exceptions.RuleDeclinedException;
 import java.io.Serializable;
 
 public abstract class Rule implements Serializable {
-	private User _user;
-	private Work _work;
 
-	public Rule(User user, Work work) {
-		_user = user;
-		_work = work;
-	}
-
-	protected User getUser() {
-		return _user;
-	}
-
-	protected Work getWork() {
-		return _work;
-	}
-
-	public abstract void validate() throws RuleDeclinedException;
+	public abstract void validate(Work work, User user) throws RuleDeclinedException;
 }
