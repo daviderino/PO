@@ -1,10 +1,13 @@
 package m19;
 
 import m19.exceptions.ActiveUserException;
+import m19.exceptions.RequestNonExistentException;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Class that represents the concept of user
@@ -16,7 +19,7 @@ public class User implements Serializable, Comparable<User>, Observer {
 	private String _name;
 	private String _email;
 	private Behaviour _behaviour;
-	private List<Request> _requests = new ArrayList<Request>();
+	private Map<Integer, Request> _requests = new HashMap<Integer, Request>();
 	private List<Notification> _notifications = new ArrayList<Notification>();
 
 
@@ -73,22 +76,34 @@ public class User implements Serializable, Comparable<User>, Observer {
 	/**
 	 * @return the requests list
 	 */
-	public List<Request> getRequests() {
+	public Map<Integer, Request> getRequests() {
 		return _requests;
+	}
+
+	public Request getRequest(int workId) throws RequestNonExistentException{
+		Request request = _requests.get(workId);
+		if(request == null){
+			throw new RequestNonExistentException();
+		}
+		return request;
+	}
+
+	public boolean hasRequest(int workId){
+		return (_requests.get(workId) != null);
 	}
 
 	/**
 	 * @param request to add
 	 */
-	public void addRequest(Request request) {
-		_requests.add(request);
+	public void addRequest(Request request, int workId) {
+		_requests.put(workId, request);
 	}
 
 	/**
 	 * @param request to remove
 	 */
-	public void removeRequest(Request request) {
-		_requests.remove(request);
+	public void removeRequest(int workId) {
+		_requests.remove(workId);
 	}
 
 	/**
@@ -174,12 +189,12 @@ public class User implements Serializable, Comparable<User>, Observer {
 	/**
 	 * Pays a fine
 	 */
-	public void payFine(int payment) throws ActiveUserException {
+	public void payFine() throws ActiveUserException {
 		if(!_isActive && _totalFines >= 5) {
-			_totalFines -= payment;
+			_totalFines = 0;
 			boolean onTime = true;
 
-			for(Request request: _requests) {
+			for(Request request: _requests.values()) {
 				if(!request.getOnTime()) {
 					onTime = false;
 					break;
@@ -193,20 +208,6 @@ public class User implements Serializable, Comparable<User>, Observer {
 			throw new ActiveUserException();
 		}
 	}
-
-	/**
-	 * Pays a fine
-	 */
-	public void payFine() throws ActiveUserException {
-		if(!_isActive && _totalFines >= 5) {
-			_totalFines = 0;
-			_isActive = true;
-		}
-		else {
-			throw new ActiveUserException();
-		}
-	}
-
 
 	public void update(Work work, String type){
 		_notifications.add(new Notification(work, type));

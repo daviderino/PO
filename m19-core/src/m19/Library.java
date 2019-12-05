@@ -148,7 +148,7 @@ public class Library implements Serializable {
 			_date = _date + n;
 
 			for(User user: _users.values()) {
-				for(Request request: user.getRequests()) {
+				for(Request request: user.getRequests().values()) {
 					if(request.getOnTime() && request.getReturnDate() < _date) {
 						request.setOnTime(false);
 					}
@@ -238,11 +238,6 @@ public class Library implements Serializable {
 		_libChanged = true;
 	}
 
-	public void payFine(int userId, int payment) throws ActiveUserException, GetUserFailedException {
-		getUser(userId).payFine(payment);
-		_libChanged = true;
-	}
-
 	/**
 	 * @param term to search
 	 * @return
@@ -278,7 +273,7 @@ public class Library implements Serializable {
 
 		_rules.validate(work, user);
 		int returnDate = work.computeReturnDate(user) + _date;
-		user.addRequest(new Request(user, work, returnDate));
+		user.addRequest(new Request(user, work, returnDate), workId);
 		work.decrementCount();
 		work.notifyRequestObservers();
 		_libChanged = true;
@@ -305,29 +300,25 @@ public class Library implements Serializable {
 		User user = getUser(userId);
 		Work work = getWork(workId);
 
-		for(Request request: user.getRequests()) {
-			if(request.getUserId() == userId && request.getWorkId() == workId) {
-				user.removeRequest(request);
+		Request request = user.getRequest(workId);
+		user.removeRequest(workId);
 
-				int fine = user.getTotalFines();
+		int fine = user.getTotalFines();
 
-				if(request.getReturnDate() < _date) {
-					fine += 5 * (_date - request.getReturnDate());
-					user.setIsActive(false);
-					user.setFine(fine);
-					user.behavedPoorly();
-				}
-				else {
-					user.behavedProperly();
-				}
-
-				work.notifyReturnObservers();
-				work.incrementCount();
-				_libChanged = true;
-				return fine;
-			}
+		if(request.getReturnDate() < _date) {
+			fine += 5 * (_date - request.getReturnDate());
+			user.setIsActive(false);
+			user.setFine(fine);
+			user.behavedPoorly();
 		}
-		throw new RequestNonExistentException();
+		else {
+			user.behavedProperly();
+		}
+
+		work.notifyReturnObservers();
+		work.incrementCount();
+		_libChanged = true;
+		return fine;
 	}
 
 	public void addRequestObserver(int userId, int workId) {
