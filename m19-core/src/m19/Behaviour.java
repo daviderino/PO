@@ -1,8 +1,6 @@
 package m19;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
 public abstract class Behaviour implements Serializable {
 	private User _user;

@@ -7,8 +7,15 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.TreeMap;
+import java.util.LinkedList;
 import java.util.regex.Pattern;
+import java.util.Map;
+import java.util.List;
 
 /**
  * Class that represents the library as a whole.
@@ -151,6 +158,7 @@ public class Library implements Serializable {
 				for(Request request: user.getRequests().values()) {
 					if(request.getOnTime() && request.getReturnDate() < _date) {
 						request.setOnTime(false);
+						user.setIsActive(false);
 					}
 				}
 			}
@@ -273,7 +281,7 @@ public class Library implements Serializable {
 
 		_rules.validate(work, user);
 		int returnDate = work.computeReturnDate(user) + _date;
-		user.addRequest(new Request(user, work, returnDate), workId);
+		user.addRequest(new Request(returnDate), workId);
 		work.decrementCount();
 		work.notifyRequestObservers();
 		_libChanged = true;
@@ -307,7 +315,6 @@ public class Library implements Serializable {
 
 		if(request.getReturnDate() < _date) {
 			fine += 5 * (_date - request.getReturnDate());
-			user.setIsActive(false);
 			user.setFine(fine);
 			user.behavedPoorly();
 		}

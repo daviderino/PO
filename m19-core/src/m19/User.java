@@ -60,13 +60,6 @@ public class User implements Serializable, Comparable<User>, Observer {
 	}
 
 	/**
-	 * @return the corresponding string of the user's behaviour
-	 */
-	public Behaviour getBehaviour() {
-		return _behaviour;
-	}
-
-	/**
 	 * @return the sum of the fines accumulated by the user
 	 */
 	public int getTotalFines() {
@@ -100,7 +93,7 @@ public class User implements Serializable, Comparable<User>, Observer {
 	}
 
 	/**
-	 * @param request to remove
+	 * @param workId of the request to remove
 	 */
 	public void removeRequest(int workId) {
 		_requests.remove(workId);
