@@ -12,12 +12,12 @@ public class RuleSet extends Rule implements Serializable {
 	public RuleSet() {
 		super();
 		_rules = new ArrayList<Rule>();
-		_rules.add(new RuleCantHaveNRequests());
-		_rules.add(new RuleCantRequestExpensiveWork());
-		_rules.add(new RuleCantRequestReference());
 		_rules.add(new RuleCantRequestTwice());
-		_rules.add(new RuleNoCopiesAvailable());
 		_rules.add(new RuleUserNotSuspended());
+		_rules.add(new RuleNoCopiesAvailable());
+		_rules.add(new RuleCantHaveNRequests());
+		_rules.add(new RuleCantRequestReference());
+		_rules.add(new RuleCantRequestExpensiveWork());
 	}
 
 
