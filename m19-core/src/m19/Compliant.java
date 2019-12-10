@@ -12,7 +12,7 @@ public class Compliant extends Behaviour implements Serializable {
 
 	@Override
 	public void behavedProperly() {
-		// do nothing
+		incrementGoodStreak();
 	}
 
 	@Override

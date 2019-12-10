@@ -20,7 +20,7 @@ public class NonCompliant extends Behaviour implements Serializable {
 
 	@Override
 	public void behavedPoorly() {
-		// do nothing
+		incrementBadStreak();
 	}
 
 	@Override

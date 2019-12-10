@@ -183,7 +183,7 @@ public class User implements Serializable, Comparable<User>, Observer {
 	 * Pays a fine
 	 */
 	public void payFine() throws ActiveUserException {
-		if(!_isActive && _totalFines >= 5) {
+		if(!_isActive) {
 			_totalFines = 0;
 			boolean onTime = true;
 

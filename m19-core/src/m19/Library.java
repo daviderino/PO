@@ -338,6 +338,10 @@ public class Library implements Serializable {
 
 	public List<Notification> getUserNotifications(int userId) throws GetUserFailedException{
 		User user = getUser(userId);
-		return user.getNotifications();
+		List<Notification> notifications = user.getNotifications();
+		if(!notifications.isEmpty()) {
+			_libChanged = true;
+		}
+		return notifications;
 	}
 }
